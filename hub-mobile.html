@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Hub de Estudos · Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+  />
+  <link rel="stylesheet" href="css/mobile.css" />
+
+  <div id="palco" class="palco">
+    <aside id="painel" class="painel">
+      <p class="rotulo">Protótipo · mobile</p>
+      <h1 class="painel__titulo">Hub de Estudos</h1>
+      <p class="painel__texto">
+        Visual do projeto do Figma com as features do protótipo desktop. Frame
+        390 × 844.
+      </p>
+
+      <label class="painel__rotulo" for="cargo">Ver como</label>
+      <select id="cargo" class="painel__select">
+        <option value="visitante">Visitante (sem login)</option>
+        <option value="aluno" selected>Aluno</option>
+        <option value="monitor">Monitor</option>
+        <option value="professor">Professor</option>
+        <option value="admin">Admin (coordenação)</option>
+      </select>
+      <p class="painel__nota">
+        O cargo vale por turma. Professor e admin também veem Relatórios e
+        Pessoas e cargos (em Config).
+      </p>
+
+      <label class="painel__rotulo painel__rotulo--perto" for="horario"
+        >Horário simulado</label
+      >
+      <select id="horario" class="painel__select">
+        <option value="dentro">14:00 · monitoria aberta</option>
+        <option value="fora">23:10 · fora do horário</option>
+      </select>
+
+      <div class="painel__tarefas">
+        <p class="rotulo">Tarefas do teste</p>
+        <button data-roteiro="1" class="painel__tarefa">1 · Entrar</button>
+        <button data-roteiro="2" class="painel__tarefa">
+          2 · Achar material
+        </button>
+        <button data-roteiro="3" class="painel__tarefa">
+          3 · Tirar dúvida
+        </button>
+        <button data-roteiro="4" class="painel__tarefa">
+          4 · Abrir enquete
+        </button>
+      </div>
+      <p class="painel__nota painel__nota--rodape">
+        Todas as telas lado a lado para importar no Figma: abra este arquivo com
+        <span class="codigo">#quadro</span> no fim do endereço.
+      </p>
+    </aside>
+
+    <div id="fone" class="fone"></div>
+  </div>
+
+  <script src="js/mobile.js"></script>
+</html>

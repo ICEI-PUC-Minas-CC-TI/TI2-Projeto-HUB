@@ -1,73 +1,61 @@
 <!doctype html>
 <html lang="pt-BR">
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex, nofollow" />
-  <title>Hub de Estudos · Protótipo</title>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
-  />
-  <link rel="stylesheet" href="css/prototipo.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Hub de Estudos · Protótipo</title>
+<!-- aplica o tema salvo antes de pintar, para não piscar claro ao abrir no escuro -->
+<script>try{var t=localStorage.getItem('hub-tema');if(t==='escuro'||(t==='sistema'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-tema','escuro')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/prototipo.css">
 
-  <div class="painel-teste">
-    <a class="btn-vista" href="index.html">← Instruções</a>
-    <span class="rot">Protótipo · tarefa</span>
-    <div class="tarefa" id="tarefas">
-      <button data-t="1" aria-pressed="true">1 · Entrar</button>
-      <button data-t="2" aria-pressed="false">2 · Achar material</button>
-      <button data-t="3" aria-pressed="false">3 · Tirar dúvida</button>
-      <button data-t="4" aria-pressed="false">4 · Abrir enquete</button>
-    </div>
-    <button class="btn-vista" id="vista" aria-pressed="false">
-      Ver no celular
-    </button>
-    <button class="btn-vista" id="tema" aria-pressed="false">
-      Tema escuro
-    </button>
-    <label class="hora-teste"
-      >Horário
-      <select id="horario">
-        <option value="dentro">14:00 · monitoria aberta</option>
-        <option value="fora">23:10 · fora do horário</option>
-      </select>
-    </label>
-    <label class="cargo"
-      >Cargo
-      <select id="cargo">
-        <option value="visitante">visitante</option>
-        <option value="aluno">aluno</option>
-        <option value="monitor">monitor</option>
-        <option value="professor">professor</option>
-        <option value="admin">admin (coordenação)</option>
-      </select>
-    </label>
+<div class="painel-teste">
+  <a class="btn-vista" href="index.html">← Instruções</a>
+  <span class="rot">Protótipo · tarefa</span>
+  <div class="tarefa" id="tarefas">
+    <button data-t="1" aria-pressed="true">1 · Entrar</button>
+    <button data-t="2" aria-pressed="false">2 · Achar material</button>
+    <button data-t="3" aria-pressed="false">3 · Tirar dúvida</button>
+    <button data-t="4" aria-pressed="false">4 · Abrir enquete</button>
   </div>
-  <p class="dica"><b>Faça isto:</b> <span id="dica-txt"></span></p>
+  <button class="btn-vista" id="vista" aria-pressed="false">Ver no celular</button>
+  <button class="btn-vista" id="tema" aria-pressed="false">Tema escuro</button>
+  <label class="hora-teste">Horário
+    <select id="horario">
+      <option value="dentro">14:00 · monitoria aberta</option>
+      <option value="fora">23:10 · fora do horário</option>
+    </select>
+  </label>
+  <label class="cargo">Cargo
+    <select id="cargo">
+      <option value="visitante">visitante</option>
+      <option value="aluno">aluno</option>
+      <option value="monitor">monitor</option>
+      <option value="professor">professor</option>
+      <option value="admin">admin (coordenação)</option>
+    </select>
+  </label>
+</div>
+<p class="dica"><b>Faça isto:</b> <span id="dica-txt"></span></p>
 
-  <div class="app" id="app">
-    <header class="cabecalho rel">
-      <span class="marca"><span class="xicara"></span>HUB DE ESTUDOS</span>
-      <nav class="links" id="nav"></nav>
-      <div class="menu-flut" id="menu-perfil" hidden></div>
-      <div class="menu-flut menu-notif" id="menu-notif" hidden></div>
-      <div class="menu-flut" id="menu-ham" hidden></div>
-    </header>
-    <main id="tela"></main>
+<div class="app" id="app">
+  <header class="cabecalho rel">
+    <span class="marca"><span class="xicara"></span>HUB DE ESTUDOS</span>
+    <nav class="links" id="nav"></nav>
+    <div class="menu-flut" id="menu-perfil" hidden></div>
+    <div class="menu-flut menu-notif" id="menu-notif" hidden></div>
+    <div class="menu-flut" id="menu-ham" hidden></div>
+  </header>
+  <main id="tela"></main>
+</div>
+
+<div class="vista-celular" id="celular" hidden>
+  <div class="moldura">
+    <p class="legenda">VERSÃO MOBILE · 390 × 844 · cargo e tarefas da barra valem aqui</p>
+    <iframe id="fone" src="hub-mobile.html?embed=1" title="Hub de Estudos no celular"></iframe>
   </div>
+</div>
 
-  <div class="vista-celular" id="celular" hidden>
-    <div class="moldura">
-      <p class="legenda">
-        VERSÃO MOBILE · 390 × 844 · cargo e tarefas da barra valem aqui
-      </p>
-      <iframe
-        id="fone"
-        src="hub-mobile.html?embed=1"
-        title="Hub de Estudos no celular"
-      ></iframe>
-    </div>
-  </div>
-
-  <script src="js/prototipo.js"></script>
-</html>
+<script src="js/prototipo.js"></script>

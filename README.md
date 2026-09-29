@@ -41,7 +41,8 @@ js/
   mobile.js       telas e eventos do celular
 ```
 
-As telas são montadas pelo JS como texto HTML. Por isso as classes que aparecem no `js/mobile.js` (ex.: `cartao`, `btn btn--sec`, `titulo__sub`) estão todas definidas no `css/mobile.css`.
+As telas são montadas pelo JS como texto HTML. Por isso as classes que aparecem no
+`js/mobile.js` (ex.: `cartao`, `btn btn--sec`, `titulo__sub`) estão todas definidas no `css/mobile.css`.
 
 ## Mudando a aparência
 
@@ -53,6 +54,10 @@ Comece pelas variáveis no topo de cada CSS (`:root`):
 - **Desktop (`css/prototipo.css`) e `css/inicio.css`**: cores (`--ink`, `--acao`…), espaços
   (`--e1`…`--e6`), traços, raios e tamanhos de texto.
 
+Ao trocar uma cor de texto, confira o contraste com o fundo nos dois temas: o mínimo é 4.5:1
+(WCAG AA). As cores "apagadas" (`--ink-faint`, `--cor-texto-apagado`) já estão no limite, então
+não dá para clareá-las mais.
+
 Nomes das classes do celular:
 
 - `bloco__parte` é uma parte de um componente (`cartao__rodape`, `navegacao__aba`);
@@ -60,4 +65,5 @@ Nomes das classes do celular:
 - no fim do arquivo ficam ajustes pontuais reutilizáveis: espaçamento (`mt-3`, `mb-3`),
   cor de trecho de texto (`realce`, `suave`) e layout (`fila`, `grade-2`, `pilha-3`).
 
-`css/mobile.css` usa camadas (`@layer reset, componentes`): as regras fora de camada, no final, valem sobre as de dentro.
+`css/mobile.css` usa camadas (`@layer reset, componentes`): as regras fora de camada, no final,
+valem sobre as de dentro.

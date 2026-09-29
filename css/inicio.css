@@ -1,0 +1,55 @@
+/* Hub de Estudos · página "Comece aqui" (index.html)
+   Cores e medidas nas variáveis de :root. */
+:root{
+  --paper:#f1f1f1; --paper-2:#ffffff;
+  --ink:#1a1a1a; --ink-soft:#5c5c5c; --ink-faint:#6b6b6b;
+  --line:#1a1a1a; --line-soft:#d4d4d4;
+  --fill-soft:#ededed;
+  --acao:#1f4ed8; --acao-esc:#173bab;
+  --nota:#d1341c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:15px;line-height:1.55}
+a{color:inherit}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.folha{max-width:1040px;margin:0 auto;padding:40px 20px 64px}
+
+header{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;border-bottom:2px solid var(--line);padding-bottom:24px}
+.marca{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.02em}
+.xicara{width:24px;height:24px;border:2px solid var(--line);border-radius:50%}
+h1{font-size:34px;line-height:1.15;margin:12px 0 0;text-wrap:balance}
+.sub{color:var(--ink-soft);margin:8px 0 0;max-width:60ch}
+.abrir{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:10px;padding:10px 16px;font-weight:600;text-decoration:none;background:var(--paper-2);font-size:14px}
+.btn:hover{background:var(--fill-soft)}
+.btn.cheio{background:var(--acao);border-color:var(--acao);color:#fff}
+.btn.cheio:hover{background:var(--acao-esc);border-color:var(--acao-esc)}
+.btn.peq{padding:5px 11px;font-size:13px;border-radius:8px}
+a:focus-visible{outline:3px solid var(--acao);outline-offset:2px}
+
+.rotulo{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0}
+section{margin-top:36px}
+h2{font-size:21px;margin:6px 0 14px}
+
+.como{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.como div{background:var(--paper-2);border:2px solid var(--line-soft);border-radius:12px;padding:14px 16px}
+.como b{display:block;margin-bottom:2px}
+.como p{margin:0;color:var(--ink-soft);font-size:14px}
+.barra-demo{display:inline-block;background:var(--ink);color:#fff;border-radius:6px;padding:0 6px;font-size:12px}
+
+.tarefas{display:grid;gap:14px}
+.tarefa{background:var(--paper-2);border:2px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:820px){.tarefa{grid-template-columns:1.25fr 1fr}}
+.tarefa h3{font-size:19px;margin:4px 0 2px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+.chip{border:2px solid var(--line);border-radius:999px;padding:0 10px;font-size:12.5px;white-space:nowrap}
+ol{margin:10px 0 0;padding-left:20px} ol li{margin:3px 0}
+.fim{margin:10px 0 0;font-size:14px}
+.lado{border-left:2px dashed var(--line-soft);padding-left:16px;display:flex;flex-direction:column;gap:10px}
+@media(max-width:819px){.lado{border-left:0;padding-left:0;border-top:2px dashed var(--line-soft);padding-top:14px}}
+.alt{margin:0;padding-left:18px;font-size:14px;color:var(--ink-soft)} .alt li{margin:3px 0}
+.alt b{color:var(--ink)}
+.dif{font-size:13px;color:var(--ink-soft);margin:0}
+.comecar{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+
+footer{margin-top:40px;padding-top:16px;border-top:2px dashed var(--line-soft);color:var(--ink-faint);font-size:13px}

@@ -1,0 +1,557 @@
+Project hub_de_estudos {
+  database_type: 'PostgreSQL'
+  Note: 'Hub de Estudos · TI2 PUC Minas · Esquema do banco (Supabase)'
+}
+
+Table usuario [headercolor: #2F6FB0] {
+  id_usuario integer [pk, increment, note: 'Identificador do usuário']
+  nome varchar(100) [not null, check: `char_length(trim(nome)) > 0`, note: 'Nome completo']
+  email_institucional varchar(150) [not null, unique, check: `email_institucional ~* '^[^@\s]+@([a-z0-9-]+\.)*pucminas\.br$'`, note: 'E-mail da PUC Minas, usado no login']
+  senha varchar(255) [not null, note: 'Hash da senha (nunca a senha em texto)']
+  matricula varchar(20) [not null, unique, note: 'Matrícula do aluno ou registro do servidor']
+  curso varchar(100) [not null, note: 'Curso de graduação']
+  periodo smallint [check: `periodo BETWEEN 1 AND 12`, note: 'Período atual (nulo para professor e coordenação)']
+  turno varchar(10) [check: `turno IN ('manhã', 'tarde', 'noite')`, note: 'Turno do aluno']
+  data_cadastro date [not null, default: `CURRENT_DATE`, note: 'Data de criação da conta']
+  link_calendario varchar(255) [note: 'Endereço .ics do calendário pessoal exportado']
+  administrador boolean [not null, default: false, note: 'Se tem permissão de administração']
+
+  Note: 'Pessoa cadastrada no Hub. O cargo (aluno, monitor, professor) é definido por turma, em turma_usuario.'
+}
+
+Table preferencia [headercolor: #2F6FB0] {
+  id_usuario integer [pk, note: 'Dono das preferências']
+  tema_interface varchar(10) [not null, default: 'sistema', check: `tema_interface IN ('claro', 'escuro', 'sistema')`, note: 'Tema de cores']
+  tamanho_fonte varchar(10) [not null, default: 'médio', check: `tamanho_fonte IN ('pequeno', 'médio', 'grande')`, note: 'Tamanho do texto']
+  densidade varchar(12) [not null, default: 'padrão', check: `densidade IN ('compacta', 'padrão', 'confortável')`, note: 'Espaçamento da interface']
+  idioma varchar(5) [not null, default: 'pt-BR', check: `idioma IN ('pt-BR', 'en-US', 'es-ES')`, note: 'Idioma da interface']
+  visibilidade_perfil varchar(10) [not null, default: 'turmas', check: `visibilidade_perfil IN ('pública', 'turmas', 'privada')`, note: 'Quem pode ver o perfil']
+  mostrar_online boolean [not null, default: true, note: 'Exibe status online']
+  alto_contraste boolean [not null, default: false, note: 'Acessibilidade: alto contraste']
+  reduzir_animacoes boolean [not null, default: false, note: 'Acessibilidade: reduzir animações']
+  leitor_tela boolean [not null, default: false, note: 'Acessibilidade: otimização para leitor de tela']
+  atalhos_teclado boolean [not null, default: false, note: 'Acessibilidade: atalhos de teclado']
+  foco_reforcado boolean [not null, default: false, note: 'Acessibilidade: contorno de foco reforçado']
+  verificacao_duas_etapas boolean [not null, default: false, note: 'Login com verificação em duas etapas']
+
+  Note: 'Preferências de interface e acessibilidade (1:1 com usuário, entidade fraca).'
+}
+
+Table preferencia_notificacao [headercolor: #2F6FB0] {
+  id_usuario integer [not null, note: 'Dono da preferência']
+  tipo_notificacao varchar(20) [not null, check: `tipo_notificacao IN ('nova dúvida', 'nova resposta', 'nova mensagem', 'nova nota', 'novo evento', 'nova enquete', 'enquete encerrada', 'comunicado')`, note: 'Tipo de aviso configurado (chave parcial)']
+  aviso_app boolean [not null, default: true, note: 'Avisar dentro do Hub']
+  aviso_email boolean [not null, default: false, note: 'Avisar por e-mail']
+
+  indexes {
+    (id_usuario, tipo_notificacao) [pk]
+  }
+
+  Note: 'Como o usuário quer ser avisado de cada tipo de notificação (entidade fraca).'
+}
+
+Table materia [headercolor: #7A4FB5] {
+  id_materia integer [pk, increment, note: 'Identificador da matéria']
+  nome varchar(100) [not null, check: `char_length(trim(nome)) > 0`, note: 'Nome da matéria']
+  sigla varchar(20) [not null, unique, note: 'Sigla usada no Hub (ex.: CALC1, AEDs II)']
+  creditos smallint [not null, check: `creditos > 0`, note: 'Carga em créditos']
+
+  Note: 'Disciplina do curso.'
+}
+
+Table materia_apelido [headercolor: #7A4FB5] {
+  id_materia integer [not null, note: 'Matéria apelidada']
+  apelido varchar(30) [not null, check: `char_length(trim(apelido)) > 0`, note: 'Apelido de busca']
+
+  indexes {
+    (id_materia, apelido) [pk]
+  }
+
+  Note: 'Apelidos usados na busca (atributo multivalorado de matéria: \'calc\' → Cálculo I).'
+}
+
+Table turma [headercolor: #7A4FB5] {
+  id_turma integer [pk, increment, note: 'Identificador da turma']
+  id_materia integer [not null, note: 'Matéria ofertada']
+  identificacao varchar(20) [not null, note: 'Nome da turma (ex.: Turma 1)']
+  semestre_letivo char(6) [not null, check: `semestre_letivo ~ '^[0-9]{4}/[12]$'`, note: 'Semestre no formato AAAA/S (ex.: 2026/2)']
+  turno varchar(10) [not null, check: `turno IN ('manhã', 'tarde', 'noite')`, note: 'Turno das aulas']
+  total_aulas smallint [not null, check: `total_aulas > 0`, note: 'Aulas previstas no semestre']
+  frequencia_minima "numeric(5,2)" [not null, default: 75, check: `frequencia_minima BETWEEN 0 AND 100`, note: 'Frequência mínima para aprovação (%)']
+  nota_aprovacao "numeric(5,2)" [not null, default: 60, check: `nota_aprovacao BETWEEN 0 AND 100`, note: 'Nota mínima para aprovação (0 a 100)']
+
+  indexes {
+    (id_materia, semestre_letivo, identificacao) [unique, name: 'uq_turma_id_materia_semestre_letivo_identificacao']
+  }
+
+  Note: 'Oferta de uma matéria em um semestre, com a regra de aprovação.'
+}
+
+Table turma_usuario [headercolor: #7A4FB5] {
+  id_turma integer [not null, note: 'Turma']
+  id_usuario integer [not null, note: 'Participante']
+  cargo varchar(10) [not null, default: 'aluno', check: `cargo IN ('aluno', 'monitor', 'professor')`, note: 'Cargo do usuário nesta turma']
+  situacao varchar(12) [not null, default: 'cursando', check: `situacao IN ('cursando', 'aprovado', 'reprovado', 'trancado')`, note: 'Situação na turma']
+  faltas smallint [not null, default: 0, check: `faltas >= 0`, note: 'Faltas acumuladas']
+  data_entrada date [not null, default: `CURRENT_DATE`, note: 'Data de entrada na turma']
+  origem varchar(10) [not null, default: 'manual', check: `origem IN ('manual', 'csv', 'canvas')`, note: 'Como o vínculo foi criado']
+
+  indexes {
+    (id_turma, id_usuario) [pk]
+  }
+
+  Note: 'Participação do usuário na turma (relacionamento N:N \'participa\'). Define o cargo na turma.'
+}
+
+Table historico_cargo [headercolor: #7A4FB5] {
+  id_historico integer [pk, increment, note: 'Identificador do registro']
+  id_turma integer [not null, note: 'Turma em que o cargo mudou']
+  id_usuario integer [not null, note: 'Usuário que teve o cargo alterado (\'é alterado\')']
+  id_alterado_por integer [not null, note: 'Quem fez a alteração (\'altera\')']
+  cargo_anterior varchar(10) [not null, check: `cargo_anterior IN ('aluno', 'monitor', 'professor')`, note: 'Cargo antes da mudança']
+  cargo_novo varchar(10) [not null, check: `cargo_novo IN ('aluno', 'monitor', 'professor')`, note: 'Cargo depois da mudança']
+  data_hora timestamptz [not null, default: `now()`, note: 'Momento da alteração']
+  meio varchar(10) [not null, check: `meio IN ('página', 'csv')`, note: 'Onde a alteração foi feita']
+
+  checks {
+    `cargo_novo <> cargo_anterior` [name: 'ck_historico_cargo_regra1']
+  }
+
+  Note: 'Registro de cada troca de cargo feita por professor ou administrador.'
+}
+
+Table horario_atendimento [headercolor: #7A4FB5] {
+  id_horario integer [pk, increment, note: 'Identificador do horário']
+  id_turma integer [not null, note: 'Turma atendida (\'tem horário\')']
+  id_monitor integer [not null, note: 'Monitor que atende (\'atende\')']
+  dia_semana smallint [not null, check: `dia_semana BETWEEN 1 AND 7`, note: 'Dia da semana (1 = segunda … 7 = domingo)']
+  hora_inicio time [not null, note: 'Início do atendimento']
+  hora_fim time [not null, note: 'Fim do atendimento']
+
+  checks {
+    `hora_fim > hora_inicio` [name: 'ck_horario_atendimento_regra1']
+  }
+
+  Note: 'Horário semanal em que um monitor atende uma turma.'
+}
+
+Table integracao_canvas [headercolor: #1F8A70] {
+  id_usuario integer [pk, note: 'Dono da integração']
+  token varchar(255) [not null, note: 'Token de acesso ao Canvas (guardado criptografado)']
+  autorizado boolean [not null, default: false, note: 'Se o usuário concedeu a autorização']
+  situacao varchar(10) [not null, default: 'ativa', check: `situacao IN ('ativa', 'pausada', 'expirada', 'revogada')`, note: 'Estado da conexão']
+  ultima_sincronizacao timestamptz [note: 'Última sincronização concluída']
+  url_feed varchar(255) [note: 'Endereço do feed .ics do Canvas']
+
+  Note: 'Conexão do usuário com o Canvas (0 ou 1 por usuário, entidade fraca).'
+}
+
+Table atividade_avaliativa [headercolor: #1F8A70] {
+  id_atividade integer [pk, increment, note: 'Identificador da atividade']
+  id_turma integer [not null, note: 'Turma da atividade']
+  nome varchar(150) [not null, check: `char_length(trim(nome)) > 0`, note: 'Nome da atividade (ex.: Prova 1)']
+  valor "numeric(5,2)" [not null, check: `valor > 0 AND valor <= 100`, note: 'Pontos distribuídos']
+  origem varchar(10) [not null, default: 'manual', check: `origem IN ('canvas', 'manual')`, note: 'De onde veio a atividade']
+
+  Note: 'Atividade que vale pontos em uma turma (\'compõe\').'
+}
+
+Table nota [headercolor: #1F8A70] {
+  id_atividade integer [not null, note: 'Atividade avaliada']
+  id_usuario integer [not null, note: 'Aluno avaliado']
+  pontos_obtidos "numeric(5,2)" [not null, check: `pontos_obtidos >= 0`, note: 'Pontos obtidos']
+  origem varchar(10) [not null, default: 'manual', check: `origem IN ('canvas', 'manual')`, note: 'De onde veio a nota']
+
+  indexes {
+    (id_atividade, id_usuario) [pk]
+  }
+
+  Note: 'Nota de um usuário em uma atividade (relacionamento N:N \'recebe nota\').'
+}
+
+Table evento [headercolor: #1F8A70] {
+  id_evento integer [pk, increment, note: 'Identificador do evento']
+  id_turma integer [not null, note: 'Turma do evento']
+  id_atividade integer [unique, note: 'Atividade correspondente (0 ou 1)']
+  titulo varchar(150) [not null, check: `char_length(trim(titulo)) > 0`, note: 'Título do evento']
+  tipo varchar(12) [not null, check: `tipo IN ('prova', 'entrega', 'aula', 'aulão', 'monitoria', 'outro')`, note: 'Tipo do evento']
+  data date [not null, note: 'Data do evento']
+  hora time [note: 'Hora do evento']
+  local varchar(100) [note: 'Local (ex.: Prédio 34, sala 101)']
+  origem varchar(10) [not null, default: 'hub', check: `origem IN ('canvas', 'hub')`, note: 'De onde veio o evento']
+
+  Note: 'Item do calendário de uma turma (\'agenda\'); pode corresponder a uma atividade.'
+}
+
+Table entrega [headercolor: #1F8A70] {
+  id_evento integer [not null, note: 'Evento']
+  id_usuario integer [not null, note: 'Aluno']
+  progresso smallint [not null, default: 0, check: `progresso BETWEEN 0 AND 100`, note: 'Progresso da entrega (%)']
+  situacao varchar(12) [not null, default: 'pendente', check: `situacao IN ('pendente', 'em andamento', 'entregue', 'atrasada')`, note: 'Situação da entrega']
+
+  indexes {
+    (id_evento, id_usuario) [pk]
+  }
+
+  Note: 'Progresso de cada usuário em um evento de entrega (relacionamento N:N \'entrega\').'
+}
+
+Table tema [headercolor: #C0632B] {
+  id_tema integer [pk, increment, note: 'Identificador do tema']
+  id_materia integer [not null, note: 'Matéria do tema']
+  titulo varchar(100) [not null, check: `char_length(trim(titulo)) > 0`, note: 'Título do tema']
+  ordem smallint [not null, check: `ordem > 0`, note: 'Posição do tema na matéria']
+
+  indexes {
+    (id_materia, ordem) [unique, name: 'uq_tema_id_materia_ordem']
+  }
+
+  Note: 'Assunto dentro de uma matéria, em ordem de estudo (\'organiza\').'
+}
+
+Table usuario_tema [headercolor: #C0632B] {
+  id_usuario integer [not null, note: 'Estudante']
+  id_tema integer [not null, note: 'Tema estudado']
+  situacao varchar(12) [not null, default: 'não iniciado', check: `situacao IN ('não iniciado', 'estudando', 'concluído')`, note: 'Situação do estudo']
+  data_atualizacao timestamptz [not null, default: `now()`, note: 'Última mudança de situação']
+
+  indexes {
+    (id_usuario, id_tema) [pk]
+  }
+
+  Note: 'Progresso do usuário em um tema (relacionamento N:N \'estuda\').'
+}
+
+Table conteudo [headercolor: #C0632B] {
+  id_conteudo integer [pk, increment, note: 'Identificador do conteúdo']
+  id_materia integer [not null, note: 'Matéria que reúne o conteúdo (\'reúne\')']
+  id_tema integer [note: 'Tema que classifica o conteúdo (opcional)']
+  id_autor integer [not null, note: 'Quem publicou (\'publica\')']
+  id_revisor integer [note: 'Quem revisou (\'revisa\', opcional)']
+  titulo varchar(150) [not null, check: `char_length(trim(titulo)) > 0`, note: 'Título do conteúdo']
+  descricao text [note: 'Resumo do conteúdo']
+  tipo varchar(12) [not null, check: `tipo IN ('estudo', 'exercício', 'projeto', 'prova')`, note: 'Tipo do conteúdo']
+  palavras_chave "text[]" [not null, default: '{}', note: 'Palavras-chave para a busca']
+  data_publicacao timestamptz [not null, default: `now()`, note: 'Data de publicação']
+  nome_arquivo varchar(150) [not null, note: 'Nome do arquivo enviado']
+  formato varchar(10) [not null, check: `formato IN ('PDF', 'HTML', 'DOCX', 'PPTX', 'PNG', 'JPG', 'MP4', 'ZIP')`, note: 'Formato do arquivo']
+  tamanho_mb "numeric(7,2)" [not null, check: `tamanho_mb > 0`, note: 'Tamanho do arquivo em MB']
+  endereco_arquivo varchar(255) [not null, note: 'URL do arquivo no armazenamento (Supabase Storage)']
+
+  checks {
+    `id_revisor IS NULL OR id_revisor <> id_autor` [name: 'ck_conteudo_regra1']
+  }
+
+  Note: 'Material de estudo publicado no Hub.'
+}
+
+Table usuario_conteudo [headercolor: #C0632B] {
+  id_usuario integer [not null, note: 'Usuário']
+  id_conteudo integer [not null, note: 'Conteúdo']
+  favorito boolean [not null, default: false, note: 'Marcado como favorito']
+  situacao varchar(12) [not null, default: 'não iniciado', check: `situacao IN ('não iniciado', 'estudando', 'concluído')`, note: 'Situação do estudo']
+  data_ultima_interacao timestamptz [not null, default: `now()`, note: 'Última interação']
+
+  indexes {
+    (id_usuario, id_conteudo) [pk]
+  }
+
+  Note: 'Favorito e progresso do usuário em um conteúdo (relacionamento N:N \'interage\').'
+}
+
+Table acesso_conteudo [headercolor: #C0632B] {
+  id_acesso bigint [pk, increment, note: 'Identificador do acesso']
+  id_usuario integer [not null, note: 'Quem acessou']
+  id_conteudo integer [not null, note: 'Conteúdo acessado']
+  data_hora timestamptz [not null, default: `now()`, note: 'Momento do acesso']
+
+  Note: 'Cada abertura de um conteúdo por um usuário (base para relatórios).'
+}
+
+Table comentario [headercolor: #C0632B] {
+  id_comentario integer [pk, increment, note: 'Identificador do comentário']
+  id_conteudo integer [not null, note: 'Conteúdo comentado (\'tem\')']
+  id_usuario integer [not null, note: 'Autor (\'escreve\')']
+  texto varchar(1000) [not null, check: `char_length(trim(texto)) > 0`, note: 'Texto do comentário']
+  data timestamptz [not null, default: `now()`, note: 'Momento do comentário']
+
+  Note: 'Comentário de um usuário em um conteúdo.'
+}
+
+Table duvida [headercolor: #B03A48] {
+  id_duvida integer [pk, increment, note: 'Identificador interno']
+  numero integer [not null, unique, check: `numero > 0`, note: 'Número público da dúvida (ex.: #143)']
+  id_autor integer [not null, note: 'Quem abriu (\'abre\')']
+  id_turma integer [note: 'Turma que recebe a dúvida (\'recebe\')']
+  id_tema integer [note: 'Tema da dúvida (\'refere-se\')']
+  tipo varchar(20) [not null, check: `tipo IN ('dúvida de matéria', 'pedido de material', 'problema no site')`, note: 'Tipo da dúvida']
+  assunto varchar(150) [not null, check: `char_length(trim(assunto)) > 0`, note: 'Assunto resumido']
+  descricao text [not null, check: `char_length(trim(descricao)) > 0`, note: 'Descrição completa']
+  data_hora_abertura timestamptz [not null, default: `now()`, note: 'Momento da abertura']
+  situacao varchar(20) [not null, default: 'na fila', check: `situacao IN ('na fila', 'aguardando resposta', 'respondida', 'resolvida', 'fechada')`, note: 'Estado no fluxo de atendimento']
+  resolveu boolean [note: 'Resposta do autor: a dúvida foi resolvida? (nulo = ainda não respondeu)']
+
+  checks {
+    `tipo <> 'dúvida de matéria' OR id_turma IS NOT NULL` [name: 'ck_duvida_regra1']
+    `situacao <> 'resolvida' OR resolveu IS TRUE` [name: 'ck_duvida_regra2']
+  }
+
+  Note: 'Dúvida aberta por um usuário; pode ir para a fila de uma turma e se referir a um tema.'
+}
+
+Table resposta [headercolor: #B03A48] {
+  id_resposta integer [pk, increment, note: 'Identificador da resposta']
+  id_duvida integer [not null, note: 'Dúvida respondida']
+  id_autor integer [not null, note: 'Quem respondeu']
+  texto text [not null, check: `char_length(trim(texto)) > 0`, note: 'Texto da resposta']
+  data_hora timestamptz [not null, default: `now()`, note: 'Momento da resposta']
+
+  Note: 'Resposta dada a uma dúvida (\'tem\' / \'responde\').'
+}
+
+Table duvida_util [headercolor: #B03A48] {
+  id_duvida integer [not null, note: 'Dúvida marcada']
+  id_usuario integer [not null, note: 'Quem marcou']
+
+  indexes {
+    (id_duvida, id_usuario) [pk]
+  }
+
+  Note: 'Usuários que marcaram a dúvida como útil (relacionamento N:N \'marca útil\').'
+}
+
+Table enquete [headercolor: #A07A00] {
+  id_enquete integer [pk, increment, note: 'Identificador da enquete']
+  id_turma integer [not null, note: 'Turma da enquete']
+  id_criador integer [not null, note: 'Quem criou']
+  id_evento integer [unique, note: 'Aulão originado pela enquete (0 ou 1)']
+  titulo varchar(150) [not null, check: `char_length(trim(titulo)) > 0`, note: 'Pergunta da enquete']
+  situacao varchar(10) [not null, default: 'ativa', check: `situacao IN ('rascunho', 'ativa', 'encerrada')`, note: 'Estado da enquete']
+  data_abertura timestamptz [not null, default: `now()`, note: 'Abertura da votação']
+  data_encerramento timestamptz [note: 'Encerramento da votação']
+
+  checks {
+    `data_encerramento IS NULL OR data_encerramento > data_abertura` [name: 'ck_enquete_regra1']
+  }
+
+  Note: 'Enquete aberta em uma turma (\'abre\'), criada por um usuário (\'cria\').'
+}
+
+Table opcao_enquete [headercolor: #A07A00] {
+  id_opcao integer [pk, increment, note: 'Identificador da opção']
+  id_enquete integer [not null, note: 'Enquete da opção']
+  id_tema integer [note: 'Tema da opção (opcional)']
+  texto varchar(150) [not null, check: `char_length(trim(texto)) > 0`, note: 'Texto da opção']
+
+  indexes {
+    (id_enquete, texto) [unique, name: 'uq_opcao_enquete_id_enquete_texto']
+  }
+
+  Note: 'Opção de voto de uma enquete (\'oferece\'); pode se referir a um tema (\'sobre\').'
+}
+
+Table voto [headercolor: #A07A00] {
+  id_usuario integer [not null, note: 'Quem votou']
+  id_opcao integer [not null, note: 'Opção escolhida']
+  data_hora timestamptz [not null, default: `now()`, note: 'Momento do voto']
+
+  indexes {
+    (id_usuario, id_opcao) [pk]
+  }
+
+  Note: 'Voto de um usuário em uma opção (relacionamento N:N \'vota\').'
+}
+
+Table conversa [headercolor: #2E7D9A] {
+  id_conversa integer [pk, increment, note: 'Identificador da conversa']
+  tipo varchar(6) [not null, check: `tipo IN ('direta', 'sala')`, note: 'Tipo da conversa']
+  topico varchar(100) [note: 'Assunto da sala (ex.: Revisão para a Prova 1)']
+  data_criacao timestamptz [not null, default: `now()`, note: 'Criação da conversa']
+  id_turma integer [note: 'Turma da sala (só quando tipo = \'sala\')']
+
+  checks {
+    `(tipo = 'sala' AND id_turma IS NOT NULL) OR (tipo = 'direta' AND id_turma IS NULL)` [name: 'ck_conversa_regra1']
+  }
+
+  Note: 'Conversa direta entre usuários ou sala de uma turma (\'sala de\').'
+}
+
+Table participante_conversa [headercolor: #2E7D9A] {
+  id_conversa integer [not null, note: 'Conversa']
+  id_usuario integer [not null, note: 'Participante']
+  data_ultima_leitura timestamptz [note: 'Última leitura da conversa']
+
+  indexes {
+    (id_conversa, id_usuario) [pk]
+  }
+
+  Note: 'Participantes da conversa e até onde cada um leu (relacionamento N:N \'participa\').'
+}
+
+Table mensagem [headercolor: #2E7D9A] {
+  id_mensagem bigint [pk, increment, note: 'Identificador da mensagem']
+  id_conversa integer [not null, note: 'Conversa da mensagem']
+  id_remetente integer [not null, note: 'Quem enviou']
+  texto varchar(2000) [not null, check: `char_length(trim(texto)) > 0`, note: 'Texto da mensagem']
+  data_hora timestamptz [not null, default: `now()`, note: 'Momento do envio']
+
+  Note: 'Mensagem enviada em uma conversa (\'envia\' / \'contém\').'
+}
+
+Table comunicado [headercolor: #2E7D9A] {
+  id_comunicado integer [pk, increment, note: 'Identificador do comunicado']
+  id_remetente integer [not null, note: 'Quem enviou']
+  assunto varchar(150) [not null, check: `char_length(trim(assunto)) > 0`, note: 'Assunto']
+  texto text [not null, check: `char_length(trim(texto)) > 0`, note: 'Corpo do comunicado']
+  data_hora timestamptz [not null, default: `now()`, note: 'Momento do envio']
+
+  Note: 'Aviso enviado por um usuário a vários destinatários (\'remete\').'
+}
+
+Table destinatario_comunicado [headercolor: #2E7D9A] {
+  id_comunicado integer [not null, note: 'Comunicado']
+  id_usuario integer [not null, note: 'Destinatário']
+  lido boolean [not null, default: false, note: 'Já foi lido']
+  arquivado boolean [not null, default: false, note: 'Foi arquivado']
+
+  indexes {
+    (id_comunicado, id_usuario) [pk]
+  }
+
+  Note: 'Quem recebeu o comunicado e o que fez com ele (relacionamento N:N \'recebe\').'
+}
+
+Table notificacao [headercolor: #2E7D9A] {
+  id_notificacao bigint [pk, increment, note: 'Identificador da notificação']
+  id_usuario integer [not null, note: 'Usuário notificado']
+  tipo varchar(12) [not null, check: `tipo IN ('resposta', 'mensagem', 'nota', 'evento', 'aulão', 'enquete', 'comunicado', 'conteúdo')`, note: 'Tipo da notificação']
+  texto varchar(255) [not null, check: `char_length(trim(texto)) > 0`, note: 'Texto exibido']
+  data_hora timestamptz [not null, default: `now()`, note: 'Momento da notificação']
+  lida boolean [not null, default: false, note: 'Já foi lida']
+  referencia_tipo varchar(12) [check: `referencia_tipo IN ('dúvida', 'conversa', 'evento', 'conteúdo', 'enquete', 'comunicado', 'atividade')`, note: 'Tipo do item de origem (parte do atributo \'referencia\')']
+  referencia_id integer [note: 'Número ou código do item de origem']
+
+  checks {
+    `(referencia_tipo IS NULL) = (referencia_id IS NULL)` [name: 'ck_notificacao_regra1']
+  }
+
+  Note: 'Aviso para um usuário (\'notifica\'), com referência ao item que o gerou.'
+}
+
+Table avaliacao_hub [headercolor: #5A6B7B] {
+  id_avaliacao integer [pk, increment, note: 'Identificador da avaliação']
+  id_usuario integer [not null, note: 'Quem avaliou']
+  nota smallint [not null, check: `nota BETWEEN 1 AND 5`, note: 'Nota de 1 a 5']
+  categoria varchar(12) [not null, default: 'geral', check: `categoria IN ('geral', 'calendário', 'chat', 'matérias', 'conteúdos', 'dúvidas', 'notificações')`, note: 'Área avaliada']
+  comentario varchar(1000) [note: 'Comentário livre']
+  data date [not null, default: `CURRENT_DATE`, note: 'Data da avaliação']
+
+  Note: 'Avaliação da plataforma feita por um usuário (\'avalia\').'
+}
+
+Ref fk_preferencia_id_usuario: preferencia.id_usuario - usuario.id_usuario [delete: cascade]
+Ref fk_preferencia_notificacao_id_usuario: preferencia_notificacao.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_materia_apelido_id_materia: materia_apelido.id_materia > materia.id_materia [delete: cascade]
+Ref fk_turma_id_materia: turma.id_materia > materia.id_materia [delete: restrict]
+Ref fk_turma_usuario_id_turma: turma_usuario.id_turma > turma.id_turma [delete: cascade]
+Ref fk_turma_usuario_id_usuario: turma_usuario.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_historico_cargo_id_turma: historico_cargo.id_turma > turma.id_turma [delete: cascade]
+Ref fk_historico_cargo_id_usuario: historico_cargo.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_historico_cargo_id_alterado_por: historico_cargo.id_alterado_por > usuario.id_usuario [delete: restrict]
+Ref fk_horario_atendimento_id_turma: horario_atendimento.id_turma > turma.id_turma [delete: cascade]
+Ref fk_horario_atendimento_id_monitor: horario_atendimento.id_monitor > usuario.id_usuario [delete: cascade]
+Ref fk_integracao_canvas_id_usuario: integracao_canvas.id_usuario - usuario.id_usuario [delete: cascade]
+Ref fk_atividade_avaliativa_id_turma: atividade_avaliativa.id_turma > turma.id_turma [delete: cascade]
+Ref fk_nota_id_atividade: nota.id_atividade > atividade_avaliativa.id_atividade [delete: cascade]
+Ref fk_nota_id_usuario: nota.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_evento_id_turma: evento.id_turma > turma.id_turma [delete: cascade]
+Ref fk_evento_id_atividade: evento.id_atividade - atividade_avaliativa.id_atividade [delete: set null]
+Ref fk_entrega_id_evento: entrega.id_evento > evento.id_evento [delete: cascade]
+Ref fk_entrega_id_usuario: entrega.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_tema_id_materia: tema.id_materia > materia.id_materia [delete: cascade]
+Ref fk_usuario_tema_id_usuario: usuario_tema.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_usuario_tema_id_tema: usuario_tema.id_tema > tema.id_tema [delete: cascade]
+Ref fk_conteudo_id_materia: conteudo.id_materia > materia.id_materia [delete: restrict]
+Ref fk_conteudo_id_tema: conteudo.id_tema > tema.id_tema [delete: set null]
+Ref fk_conteudo_id_autor: conteudo.id_autor > usuario.id_usuario [delete: restrict]
+Ref fk_conteudo_id_revisor: conteudo.id_revisor > usuario.id_usuario [delete: set null]
+Ref fk_usuario_conteudo_id_usuario: usuario_conteudo.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_usuario_conteudo_id_conteudo: usuario_conteudo.id_conteudo > conteudo.id_conteudo [delete: cascade]
+Ref fk_acesso_conteudo_id_usuario: acesso_conteudo.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_acesso_conteudo_id_conteudo: acesso_conteudo.id_conteudo > conteudo.id_conteudo [delete: cascade]
+Ref fk_comentario_id_conteudo: comentario.id_conteudo > conteudo.id_conteudo [delete: cascade]
+Ref fk_comentario_id_usuario: comentario.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_duvida_id_autor: duvida.id_autor > usuario.id_usuario [delete: restrict]
+Ref fk_duvida_id_turma: duvida.id_turma > turma.id_turma [delete: set null]
+Ref fk_duvida_id_tema: duvida.id_tema > tema.id_tema [delete: set null]
+Ref fk_resposta_id_duvida: resposta.id_duvida > duvida.id_duvida [delete: cascade]
+Ref fk_resposta_id_autor: resposta.id_autor > usuario.id_usuario [delete: restrict]
+Ref fk_duvida_util_id_duvida: duvida_util.id_duvida > duvida.id_duvida [delete: cascade]
+Ref fk_duvida_util_id_usuario: duvida_util.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_enquete_id_turma: enquete.id_turma > turma.id_turma [delete: cascade]
+Ref fk_enquete_id_criador: enquete.id_criador > usuario.id_usuario [delete: restrict]
+Ref fk_enquete_id_evento: enquete.id_evento - evento.id_evento [delete: set null]
+Ref fk_opcao_enquete_id_enquete: opcao_enquete.id_enquete > enquete.id_enquete [delete: cascade]
+Ref fk_opcao_enquete_id_tema: opcao_enquete.id_tema > tema.id_tema [delete: set null]
+Ref fk_voto_id_usuario: voto.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_voto_id_opcao: voto.id_opcao > opcao_enquete.id_opcao [delete: cascade]
+Ref fk_conversa_id_turma: conversa.id_turma > turma.id_turma [delete: cascade]
+Ref fk_participante_conversa_id_conversa: participante_conversa.id_conversa > conversa.id_conversa [delete: cascade]
+Ref fk_participante_conversa_id_usuario: participante_conversa.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_mensagem_id_conversa: mensagem.id_conversa > conversa.id_conversa [delete: cascade]
+Ref fk_mensagem_id_remetente: mensagem.id_remetente > usuario.id_usuario [delete: restrict]
+Ref fk_comunicado_id_remetente: comunicado.id_remetente > usuario.id_usuario [delete: restrict]
+Ref fk_destinatario_comunicado_id_comunicado: destinatario_comunicado.id_comunicado > comunicado.id_comunicado [delete: cascade]
+Ref fk_destinatario_comunicado_id_usuario: destinatario_comunicado.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_notificacao_id_usuario: notificacao.id_usuario > usuario.id_usuario [delete: cascade]
+Ref fk_avaliacao_hub_id_usuario: avaliacao_hub.id_usuario > usuario.id_usuario [delete: cascade]
+
+TableGroup topico_1 {
+  usuario
+  preferencia
+  preferencia_notificacao
+}
+TableGroup topico_2 {
+  materia
+  materia_apelido
+  turma
+  turma_usuario
+  historico_cargo
+  horario_atendimento
+}
+TableGroup topico_3 {
+  integracao_canvas
+  atividade_avaliativa
+  nota
+  evento
+  entrega
+}
+TableGroup topico_4 {
+  tema
+  usuario_tema
+  conteudo
+  usuario_conteudo
+  acesso_conteudo
+  comentario
+}
+TableGroup topico_5 {
+  duvida
+  resposta
+  duvida_util
+}
+TableGroup topico_6 {
+  enquete
+  opcao_enquete
+  voto
+}
+TableGroup topico_7 {
+  conversa
+  participante_conversa
+  mensagem
+  comunicado
+  destinatario_comunicado
+  notificacao
+}
+TableGroup topico_8 {
+  avaliacao_hub
+}

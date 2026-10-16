@@ -1,67 +1,51 @@
 # Hub de Estudos
 
-`Trabalho Interdisciplinar 2` · PUC Minas — ICEI · Ciência da Computação · 2026
+## Informações gerais
 
-Plataforma web para centralizar estudos, dúvidas e monitoria do curso de Ciência da Computação,
-reunindo em um único ambiente os materiais, a busca por palavra-chave, a triagem de dúvidas e os
-relatórios para a equipe de ensino.
+* **Disciplina:** TI II — Trabalho Interdisciplinar II: Front-End
+* **Ano/Semestre:** 2026/2
 
-**Integrantes:** Arthur Victor · Lucas Coelho · Gustavo Martins · Gustavo Alckmin · Henrique Temponi · Guilherme Lino
+## Alunos integrantes da equipe
 
-**Orientação:** Prof. Marcos André Silveira Kutova
+* Gustavo Martins de Ávila
+* Gustavo Henrique Santos e Silva
+* Arthur Victor Alves
+* Lucas Coelho Diniz
+* Henrique Temponi Maia
+* Guilherme Lino de Castro Souza
 
-## Contexto e problema
+## Professores responsáveis
 
-Estudantes de computação perdem tempo e se frustram ao procurar informação de estudo confiável e
-específica. As ferramentas existem (Canvas, biblioteca, IA), mas estão dispersas e mal indexadas; a
-equipe de ensino também não tem visão consolidada das dificuldades da turma.
+* Marcos André Silveira Kutova
+* Rommel Vieira Carneiro
 
-**Objetivo:** uma aplicação web que centralize os recursos de estudo, reduza o tempo do aluno para
-achar informação confiável e dê à equipe de ensino visão das dúvidas da turma.
+## Resumo
 
-**Público-alvo:** alunos de graduação em CC e afins, monitores e professores.
+O Hub de Estudos é uma plataforma web que centraliza estudos, dúvidas e monitoria do curso de Ciência da Computação da PUC Minas. Ela reúne em um único ambiente os materiais de estudo, a busca por palavra-chave, a triagem de dúvidas e os relatórios para a equipe de ensino.
 
-## Principais funcionalidades
+A fase de estratégia (pesquisa com alunos, personas, histórias de usuário, User Story Map e protótipo navegável) está documentada em [`docs/files/07_Documentacao_do_Projeto.pdf`](docs/files/07_Documentacao_do_Projeto.pdf), com a apresentação em [`docs/files/08_Apresentacao_do_Projeto.pptx`](docs/files/08_Apresentacao_do_Projeto.pptx). Todos os artefatos entregues até a Sprint 1, da Matriz CSD ao esquema do banco de dados, estão em [`docs/files`](docs/files), numerados na ordem das entregas.
 
-Catálogo centralizado (RF-04) · busca por palavra-chave (RF-11) · triagem por IA + escalonamento
-para monitor (RF-05/10/02) · exercícios no site (RF-01) · dúvidas consolidadas e relatório ao
-professor (RF-07/08) · calendário, mensagens e notificações (RF-03/06/13).
+## Problema
 
-## Tecnologias
+Estudantes de computação perdem tempo e se frustram ao procurar informação de estudo confiável e específica. As ferramentas existem (Canvas, biblioteca, IA), mas estão dispersas e mal indexadas: a busca fica presa a títulos e não ao conteúdo, e referências essenciais muitas vezes só aparecem por indicação de um professor. A equipe de ensino também não tem uma visão consolidada das dificuldades da turma.
 
-HTML, CSS e JavaScript puros, sem framework, sem build e sem servidor · protótipo publicado no
-GitHub Pages · banco de dados relacional já modelado (ver [diagramas](#documentação-e-diagramas)),
-ainda não implementado.
+O público-alvo são alunos de graduação em Ciência da Computação e cursos afins, monitores e professores.
 
-## Estrutura do repositório
+## Solução proposta
 
-```
-.
-├── README.md          # esta capa
-├── CITATION.cff       # descritor do projeto (certificado)
-├── LICENSE
-├── package.json       # back end com JSON Server (npm start)
-├── codigo/
-│   ├── db/db.json     # estruturas de dados
-│   └── public/        # protótipo: index.html, prototipo.html, hub-mobile.html e assets/ (css e js)
-├── docs/
-│   ├── images/        # diagramas do modelo conceitual e do fluxo das páginas
-│   └── files/         # documentação do projeto (PDF) e slides da Sprint 1 (PPTX)
-└── templates/         # modelos da disciplina (planejamento de sprint, avaliação, apresentação)
-```
+Uma aplicação web que centraliza os recursos de estudo, reduz o tempo do aluno para achar informação confiável e dá à equipe de ensino uma visão das dúvidas da turma. As principais funcionalidades são:
 
-## Links
+* catálogo centralizado de estudos (RF-04) e busca por palavra-chave (RF-11);
+* triagem de dúvidas por IA com escalonamento para o monitor (RF-05, RF-10, RF-02);
+* exercícios resolvidos no próprio site (RF-01);
+* dúvidas consolidadas e relatório para o professor (RF-07, RF-08);
+* calendário, mensagens e notificações (RF-03, RF-06, RF-13).
 
-- Protótipo publicado: <https://mavilaa.github.io/hub-estudos-prototipo/prototipo.html>
-- Quadro no Miro: <https://miro.com/app/board/uXjVHyQRnCk=/?share_link_id=422860542337>
+## Arquitetura da solução
 
-## Documentação e diagramas
-
-- [`docs/files/Hub_de_Estudos_Documentacao.pdf`](docs/files/Hub_de_Estudos_Documentacao.pdf):
-  contexto, personas, histórias de usuário (H01–H13), User Story Map, metodologia e referências.
-- [`docs/files/Hub_de_Estudos_Sprint1.pptx`](docs/files/Hub_de_Estudos_Sprint1.pptx):
-  apresentação da Sprint 1 (12 slides).
-- **Modelo conceitual** (MER, notação Peter Chen), em `docs/images/00`–`08`:
+* **Front end:** páginas em HTML, CSS e JavaScript em [`codigo/public`](codigo/public), com as telas montadas via JavaScript (DOM). O protótipo navegável está publicado no GitHub Pages.
+* **Back end:** [JSON Server](https://github.com/typicode/json-server) sobre Node.js, que serve os arquivos do site e uma API REST a partir de [`codigo/db/db.json`](codigo/db/db.json) (`npm start`, porta 3000). Os detalhes de execução estão em [`codigo/README.md`](codigo/README.md).
+* **Modelo de dados:** modelo conceitual (MER, notação Peter Chen) em [`docs/images`](docs/images):
   [visão geral](docs/images/00_modelo_visao_geral.png) ·
   [usuários e preferências](docs/images/01_modelo_usuarios_e_preferencias.png) ·
   [matérias, turmas e cargos](docs/images/02_modelo_materias_turmas_e_cargos.png) ·
@@ -71,90 +55,24 @@ ainda não implementado.
   [enquetes e aulões](docs/images/06_modelo_enquetes_e_auloes.png) ·
   [mensagens e notificações](docs/images/07_modelo_mensagens_e_notificacoes.png) ·
   [avaliações do Hub](docs/images/08_modelo_avaliacoes_do_hub.png)
-- **Fluxo das páginas por cargo**, em `docs/images/11`–`15`:
+* **Fluxo das páginas por cargo:**
   [visitante](docs/images/11_fluxo_visitante.png) ·
   [aluno](docs/images/12_fluxo_aluno.png) ·
   [dúvida](docs/images/13_fluxo_duvida.png) ·
   [monitor](docs/images/14_fluxo_monitor.png) ·
   [professor e coordenação](docs/images/15_fluxo_professor.png)
 
-## Protótipo interativo
+## Tecnologias utilizadas
 
-Protótipo navegável (sem banco de dados, sem servidor) usado no teste de usabilidade. Abra
-`codigo/public/index.html` para as instruções e as quatro tarefas (fluxos F1–F4). Para entrar, qualquer e-mail
-terminado em `@sga.exemplo.br` e a senha `123456`.
-
-Os arquivos ficam em `codigo/public/`:
-
-| Arquivo           | O que é                                              |
-| ----------------- | ---------------------------------------------------- |
-| `index.html`      | Página "Comece aqui": ponto de partida e tarefas     |
-| `prototipo.html`  | Protótipo desktop; `?tarefa=1..4` e `?vista=celular` |
-| `hub-mobile.html` | Versão mobile, embutida no protótipo desktop         |
-
-Os dados são fictícios. As páginas não são indexadas por buscadores (`noindex` nas três).
-
-### O que o protótipo cobre
-
-Desktop e celular têm as mesmas funções (no celular, o que abre com o mouse abre com um toque):
-
-- **Hub do aluno**: matérias com pontos obtidos, distribuídos e pendências; prévia dos conteúdos; gráfico do semestre.
-- **Matéria**: calculador de média (abre e encolhe o resto), frequência com alerta de faltas.
-- **Minhas matérias** e **Integrações** (token do Canvas) em Configurações.
-- **Estudos**: busca com sugestão de matérias por apelido (`calc` → Cálculo I, II, III).
-- **Criar conta**: senha com maiúscula, minúscula, número e caractere especial, e confirmação.
-- **Publicar**: um cartão por arquivo, com o problema de cada um no próprio cartão.
-- **Pessoas e cargos**: cargo por turma; professor muda aluno ↔ monitor nas turmas dele (página ou CSV); admin muda tudo.
-- **Relatórios do professor**: matérias → turmas → alunos e regra de nota da turma.
-- **Tema claro e escuro**, compartilhado entre desktop e celular no mesmo navegador.
-
-Para testar direto: `prototipo.html?cargo=professor&tela=relatorios`; `hub-mobile.html#quadro` mostra todas as telas do celular.
-
-### Onde fica cada coisa
-
-Os HTML só têm a estrutura. Aparência e comportamento ficam separados, em `codigo/public/assets/`:
-
-```
-css/
-  inicio.css      estilo do index.html
-  prototipo.css   estilo do prototipo.html (visual de wireframe)
-  mobile.css      estilo do hub-mobile.html
-js/
-  prototipo.js    telas e eventos do desktop
-  mobile.js       telas e eventos do celular
-```
-
-As telas são montadas pelo JS como texto HTML. Por isso as classes que aparecem no
-`js/mobile.js` (ex.: `cartao`, `btn btn--sec`, `titulo__sub`) estão todas definidas no `css/mobile.css`.
-
-### Mudando a aparência
-
-Comece pelas variáveis no topo de cada CSS (`:root`):
-
-- **Celular (`css/mobile.css`)**: a _Paleta_ tem as cores cruas e os _Papéis_ dizem onde cada
-  cor é usada. Trocar `--cor-destaque` muda botão principal, aba ativa e barras de uma vez.
-  Fontes, tamanhos de texto, raios e sombras também são variáveis.
-- **Desktop (`css/prototipo.css`) e `css/inicio.css`**: cores (`--ink`, `--acao`…), espaços
-  (`--e1`…`--e6`), traços, raios e tamanhos de texto.
-
-Ao trocar uma cor de texto, confira o contraste com o fundo nos dois temas: o mínimo é 4.5:1
-(WCAG AA). As cores "apagadas" (`--ink-faint`, `--cor-texto-apagado`) já estão no limite, então
-não dá para clareá-las mais.
-
-Nomes das classes do celular:
-
-- `bloco__parte` é uma parte de um componente (`cartao__rodape`, `navegacao__aba`);
-- `bloco--variante` muda um estado ou tamanho (`chip--ativo`, `btn--pequeno`);
-- no fim do arquivo ficam ajustes pontuais reutilizáveis: espaçamento (`mt-3`, `mb-3`),
-  cor de trecho de texto (`realce`, `suave`) e layout (`fila`, `grade-2`, `pilha-3`).
-
-`css/mobile.css` usa camadas (`@layer reset, componentes`): as regras fora de camada, no final,
-valem sobre as de dentro.
+* **Linguagens:** HTML, CSS e JavaScript
+* **Frameworks/Bibliotecas:** nenhum no front end; JSON Server (Node.js) no back end
+* **Banco de dados:** JSON Server (`codigo/db/db.json`)
+* **Ferramentas:** Git e GitHub, GitHub Pages ([protótipo publicado](https://mavilaa.github.io/hub-estudos-prototipo/prototipo.html)), Miro ([quadro do projeto](https://miro.com/app/board/uXjVHyQRnCk=/?share_link_id=422860542337))
 
 ## Histórico de versões
 
-| Versão | Data    | Descrição                                                                                              |
-| ------ | ------- | ------------------------------------------------------------------------------------------------------ |
-| 1.0    | 2026-09 | Entrega da Sprint 1: pesquisa, personas, requisitos, wireframes, protótipo, apresentação e documentação. |
-| 1.1    | 2026-09 | Modelo conceitual e fluxo das páginas por cargo (`images/`); protótipo organizado em `css/` e `js/`.    |
-| 1.2    | 2026-10 | Repositório reorganizado no padrão do template da disciplina (`codigo/`, `docs/`, `CITATION.cff`).      |
+| Versão | Data    | Descrição                                                                                                  |
+| ------ | ------- | ---------------------------------------------------------------------------------------------------------- |
+| 1.0    | 2026-09 | Entrega da Sprint 1: pesquisa, personas, requisitos, wireframes, protótipo, apresentação e documentação.     |
+| 1.1    | 2026-09 | Modelo conceitual e fluxo das páginas por cargo; protótipo organizado em `css/` e `js/`.                     |
+| 1.2    | 2026-10 | Repositório no padrão do template da disciplina (`codigo/`, `docs/`, `CITATION.cff` e capa deste README).   |

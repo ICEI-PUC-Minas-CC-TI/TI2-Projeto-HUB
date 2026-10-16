@@ -1,0 +1,39 @@
+cff-version: 1.0.1
+message: Please cite this software using these metadata.
+# title: Sigla/Nome + descricao curta (ate 80 caracteres)
+title: "Hub de Estudos"
+# abstract: Descricao completa do projeto (ate 500 caracteres)
+abstract: "Aplicação web que centraliza, em um único ambiente, os materiais de estudo, a busca por palavra-chave, a triagem de dúvidas com IA e o escalonamento para monitores do curso de Ciência da Computação da PUC Minas, além de dar à equipe de ensino uma visão consolidada das dúvidas da turma. Protótipo em HTML, CSS e JavaScript; back end previsto com JSON Server."
+# Para cada integrante, preencha family-names com o sobrenome e given-names com os demais nomes.
+# Sobrenome = último sobrenome (padrão ABNT).
+authors:
+  - family-names: Ávila
+    name-particle: de
+    given-names: Gustavo Martins
+  - family-names: Silva
+    given-names: Gustavo Henrique Santos e
+  - family-names: Alves
+    given-names: Arthur Victor
+  - family-names: Diniz
+    given-names: Lucas Coelho
+  - family-names: Maia
+    given-names: Henrique Temponi
+  - family-names: Souza
+    given-names: Guilherme Lino de Castro
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Kutova
+    given-names: Marcos André Silveira
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Carneiro
+    given-names: Rommel Vieira
+keywords:
+  - educação
+  - monitoria
+  - ciência da computação
+  - aplicação web
+repository-code: https://github.com/ICEI-PUC-Minas-CC-TI/TI2-Projeto-HUB
+license: CC-BY-4.0
+version: 1.0.0
+date-released: 2026-10-15

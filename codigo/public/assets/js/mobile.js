@@ -1,6 +1,6 @@
 /* Hub de Estudos · mobile
    Protótipo clicável (sem servidor). As telas são montadas como texto HTML
-   e as classes usadas aqui estão todas em css/mobile.css. */
+   e as classes usadas aqui estão todas em assets/css/mobile.css. */
 (function(){
 "use strict";
 var EMBED = /[?&]embed=1/.test(location.search) && window.parent !== window;
@@ -2054,7 +2054,7 @@ function exportar(){
   if (hsh !== 'quadro' && hsh.indexOf('tela=') !== 0) return false;
   var lista = hsh === 'quadro' ? ESTADOS : ESTADOS.filter(function(e){ return e[0] === hsh.slice(5); });
   if (!lista.length) return false;
-  // o visual das molduras está em css/mobile.css, na seção "Modo exportação"
+  // o visual das molduras está em assets/css/mobile.css, na seção "Modo exportação"
   document.documentElement.classList.add('exportando');
   var saida = document.createElement('div');
   saida.className = hsh === 'quadro' ? 'quadro' : 'solo';

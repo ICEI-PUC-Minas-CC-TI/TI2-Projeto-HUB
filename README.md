@@ -37,15 +37,17 @@ ainda não implementado.
 
 ```
 .
-├── README.md
-├── index.html        # protótipo: página "Comece aqui" com as tarefas do teste
-├── prototipo.html    # protótipo: versão desktop
-├── hub-mobile.html   # protótipo: versão mobile
-├── css/              # estilo de cada página do protótipo
-├── js/               # telas e eventos do desktop e do celular
-├── images/           # diagramas do modelo conceitual e do fluxo das páginas
-├── documentos/       # documentação do projeto (PDF)
-└── apresentacao/     # slides da Sprint 1 (PPTX)
+├── README.md          # esta capa
+├── CITATION.cff       # descritor do projeto (certificado)
+├── LICENSE
+├── package.json       # back end com JSON Server (npm start)
+├── codigo/
+│   ├── db/db.json     # estruturas de dados
+│   └── public/        # protótipo: index.html, prototipo.html, hub-mobile.html e assets/ (css e js)
+├── docs/
+│   ├── images/        # diagramas do modelo conceitual e do fluxo das páginas
+│   └── files/         # documentação do projeto (PDF) e slides da Sprint 1 (PPTX)
+└── templates/         # modelos da disciplina (planejamento de sprint, avaliação, apresentação)
 ```
 
 ## Links
@@ -55,32 +57,34 @@ ainda não implementado.
 
 ## Documentação e diagramas
 
-- [`documentos/Hub_de_Estudos_Documentacao.pdf`](documentos/Hub_de_Estudos_Documentacao.pdf):
+- [`docs/files/Hub_de_Estudos_Documentacao.pdf`](docs/files/Hub_de_Estudos_Documentacao.pdf):
   contexto, personas, histórias de usuário (H01–H13), User Story Map, metodologia e referências.
-- [`apresentacao/Hub_de_Estudos_Sprint1.pptx`](apresentacao/Hub_de_Estudos_Sprint1.pptx):
+- [`docs/files/Hub_de_Estudos_Sprint1.pptx`](docs/files/Hub_de_Estudos_Sprint1.pptx):
   apresentação da Sprint 1 (12 slides).
-- **Modelo conceitual** (MER, notação Peter Chen), em `images/00`–`08`:
-  [visão geral](images/00_modelo_visao_geral.png) ·
-  [usuários e preferências](images/01_modelo_usuarios_e_preferencias.png) ·
-  [matérias, turmas e cargos](images/02_modelo_materias_turmas_e_cargos.png) ·
-  [Canvas, notas e calendário](images/03_modelo_canvas_notas_e_calendario.png) ·
-  [temas e conteúdos](images/04_modelo_temas_e_conteudos.png) ·
-  [dúvidas e monitoria](images/05_modelo_duvidas_e_monitoria.png) ·
-  [enquetes e aulões](images/06_modelo_enquetes_e_auloes.png) ·
-  [mensagens e notificações](images/07_modelo_mensagens_e_notificacoes.png) ·
-  [avaliações do Hub](images/08_modelo_avaliacoes_do_hub.png)
-- **Fluxo das páginas por cargo**, em `images/11`–`15`:
-  [visitante](images/11_fluxo_visitante.png) ·
-  [aluno](images/12_fluxo_aluno.png) ·
-  [dúvida](images/13_fluxo_duvida.png) ·
-  [monitor](images/14_fluxo_monitor.png) ·
-  [professor e coordenação](images/15_fluxo_professor.png)
+- **Modelo conceitual** (MER, notação Peter Chen), em `docs/images/00`–`08`:
+  [visão geral](docs/images/00_modelo_visao_geral.png) ·
+  [usuários e preferências](docs/images/01_modelo_usuarios_e_preferencias.png) ·
+  [matérias, turmas e cargos](docs/images/02_modelo_materias_turmas_e_cargos.png) ·
+  [Canvas, notas e calendário](docs/images/03_modelo_canvas_notas_e_calendario.png) ·
+  [temas e conteúdos](docs/images/04_modelo_temas_e_conteudos.png) ·
+  [dúvidas e monitoria](docs/images/05_modelo_duvidas_e_monitoria.png) ·
+  [enquetes e aulões](docs/images/06_modelo_enquetes_e_auloes.png) ·
+  [mensagens e notificações](docs/images/07_modelo_mensagens_e_notificacoes.png) ·
+  [avaliações do Hub](docs/images/08_modelo_avaliacoes_do_hub.png)
+- **Fluxo das páginas por cargo**, em `docs/images/11`–`15`:
+  [visitante](docs/images/11_fluxo_visitante.png) ·
+  [aluno](docs/images/12_fluxo_aluno.png) ·
+  [dúvida](docs/images/13_fluxo_duvida.png) ·
+  [monitor](docs/images/14_fluxo_monitor.png) ·
+  [professor e coordenação](docs/images/15_fluxo_professor.png)
 
 ## Protótipo interativo
 
 Protótipo navegável (sem banco de dados, sem servidor) usado no teste de usabilidade. Abra
-`index.html` para as instruções e as quatro tarefas (fluxos F1–F4). Para entrar, qualquer e-mail
+`codigo/public/index.html` para as instruções e as quatro tarefas (fluxos F1–F4). Para entrar, qualquer e-mail
 terminado em `@sga.exemplo.br` e a senha `123456`.
+
+Os arquivos ficam em `codigo/public/`:
 
 | Arquivo           | O que é                                              |
 | ----------------- | ---------------------------------------------------- |
@@ -108,7 +112,7 @@ Para testar direto: `prototipo.html?cargo=professor&tela=relatorios`; `hub-mobil
 
 ### Onde fica cada coisa
 
-Os HTML só têm a estrutura. Aparência e comportamento ficam separados:
+Os HTML só têm a estrutura. Aparência e comportamento ficam separados, em `codigo/public/assets/`:
 
 ```
 css/
@@ -153,3 +157,4 @@ valem sobre as de dentro.
 | ------ | ------- | ------------------------------------------------------------------------------------------------------ |
 | 1.0    | 2026-09 | Entrega da Sprint 1: pesquisa, personas, requisitos, wireframes, protótipo, apresentação e documentação. |
 | 1.1    | 2026-09 | Modelo conceitual e fluxo das páginas por cargo (`images/`); protótipo organizado em `css/` e `js/`.    |
+| 1.2    | 2026-10 | Repositório reorganizado no padrão do template da disciplina (`codigo/`, `docs/`, `CITATION.cff`).      |

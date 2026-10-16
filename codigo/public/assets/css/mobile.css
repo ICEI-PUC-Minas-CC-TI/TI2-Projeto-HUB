@@ -10,7 +10,7 @@
    Organização do arquivo:
    1. :root ........... variáveis (cores, fontes, tamanhos, raios, sombras)
    2. @layer reset .... zera os estilos padrão do navegador
-   3. @layer componentes  as classes usadas no HTML e no js/mobile.js
+   3. @layer componentes  as classes usadas no HTML e no assets/js/mobile.js
    4. fora de camada .. regras que precisam valer sobre tudo
                         (rolagem, foco, modo embutido e modo exportação)
    ===================================================================== */

@@ -1,1 +1,178 @@
-{}
+{
+  "materias": [
+    {
+      "id": 11,
+      "sigla": "CALC1",
+      "nome": "Cálculo I",
+      "apelidos": [
+        "calc",
+        "calc1",
+        "cálculo 1"
+      ],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 21,
+      "sigla": "AEDS2",
+      "nome": "Algoritmos e Estruturas de Dados II",
+      "apelidos": [
+        "aeds",
+        "aeds2",
+        "aeds 2"
+      ],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 22,
+      "sigla": "AEDS1",
+      "nome": "Algoritmos e Estruturas de Dados I",
+      "apelidos": [
+        "aeds1",
+        "aeds 1",
+        "algoritmos 1"
+      ],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 31,
+      "sigla": "MD",
+      "nome": "Matemática Discreta",
+      "apelidos": [
+        "discreta",
+        "mat discreta"
+      ],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 41,
+      "sigla": "DIW",
+      "nome": "Desenvolvimento de Interfaces Web",
+      "apelidos": [
+        "diw",
+        "interfaces web"
+      ],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 51,
+      "sigla": "BD1",
+      "nome": "Banco de Dados I",
+      "apelidos": [
+        "bd",
+        "bd1",
+        "banco de dados"
+      ],
+      "turmas_cadastradas": []
+    }
+  ],
+  "eventos": [
+    {
+      "id": 1,
+      "titulo": "Lab 07 - Hash",
+      "materiaId": 21,
+      "tipo": "tarefa",
+      "data": "2026-10-16",
+      "hora": "18:00",
+      "sala": ""
+    },
+    {
+      "id": 2,
+      "titulo": "Trabalho Prático 1",
+      "materiaId": 41,
+      "tipo": "trabalho",
+      "data": "2026-10-18",
+      "hora": "23:59",
+      "sala": ""
+    },
+    {
+      "id": 3,
+      "titulo": "Quiz - CSS Grid",
+      "materiaId": 41,
+      "tipo": "quiz",
+      "data": "2026-10-19",
+      "hora": "21:00",
+      "sala": ""
+    },
+    {
+      "id": 4,
+      "titulo": "Lista 5 - Derivadas",
+      "materiaId": 11,
+      "tipo": "tarefa",
+      "data": "2026-10-20",
+      "hora": "23:59",
+      "sala": ""
+    },
+    {
+      "id": 5,
+      "titulo": "Revisar listas para a Prova 2",
+      "materiaId": 11,
+      "tipo": "tarefa",
+      "data": "2026-10-21",
+      "hora": "",
+      "sala": ""
+    },
+    {
+      "id": 6,
+      "titulo": "Prova 2",
+      "materiaId": 11,
+      "tipo": "prova",
+      "data": "2026-10-22",
+      "hora": "08:50",
+      "sala": "310"
+    },
+    {
+      "id": 7,
+      "titulo": "Aulão - Recursividade",
+      "materiaId": 21,
+      "tipo": "aulao",
+      "data": "2026-10-14",
+      "hora": "19:00",
+      "sala": "205"
+    },
+    {
+      "id": 8,
+      "titulo": "Prova 2",
+      "materiaId": 21,
+      "tipo": "prova",
+      "data": "2026-10-27",
+      "hora": "10:00",
+      "sala": "104"
+    },
+    {
+      "id": 9,
+      "titulo": "Aulão - Regra da cadeia",
+      "materiaId": 11,
+      "tipo": "aulao",
+      "data": "2026-10-29",
+      "hora": "19:00",
+      "sala": "201"
+    },
+    {
+      "id": 10,
+      "titulo": "Lista de Grafos",
+      "materiaId": 31,
+      "tipo": "tarefa",
+      "data": "2026-10-23",
+      "hora": "23:59",
+      "sala": ""
+    },
+    {
+      "id": 11,
+      "titulo": "Prova 1",
+      "materiaId": 51,
+      "tipo": "prova",
+      "data": "2026-10-30",
+      "hora": "08:50",
+      "sala": "112"
+    },
+    {
+      "id": 12,
+      "titulo": "Trabalho de Árvores",
+      "materiaId": 22,
+      "tipo": "trabalho",
+      "data": "2026-11-03",
+      "hora": "23:59",
+      "sala": ""
+    }
+  ]
+}

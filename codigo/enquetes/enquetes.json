@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "titulo": "Qual tema você gostaria de revisar no aulão?",
+    "materia": "AEDs",
+    "opcoes": [
+      { "id": 1, "tema": "Recursividade", "votos": 15 },
+      { "id": 2, "tema": "Ponteiros", "votos": 9 },
+      { "id": 3, "tema": "Arquivos", "votos": 6 }
+    ],
+    "ativa": true
+  },
+  {
+    "id": 2,
+    "titulo": "Qual assunto de Cálculo precisa de reforço?",
+    "materia": "Cálculo",
+    "opcoes": [
+      { "id": 1, "tema": "Limites", "votos": 4 },
+      { "id": 2, "tema": "Derivadas", "votos": 11 },
+      { "id": 3, "tema": "Integrais", "votos": 7 }
+    ],
+    "ativa": false
+  }
+]

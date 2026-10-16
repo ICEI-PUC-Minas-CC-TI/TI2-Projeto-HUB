@@ -1,0 +1,93 @@
+<!-- Guilherme Lino de Castro Souza-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub de Estudos - Enquetes de Aulão</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Hub de Estudos</h1>
+    <p>Enquetes de aulão</p>
+  </header>
+
+  <main>
+    <!-- LISTAGEM -->
+    <section id="tela-lista">
+      <h2>Enquetes</h2>
+      <div class="barra">
+        <button id="btn-nova" type="button">+ Nova enquete</button>
+        <button id="btn-exportar" type="button">Exportar JSON</button>
+        <button id="btn-resetar" type="button">Restaurar dados originais</button>
+      </div>
+      <div id="lista"></div>
+    </section>
+
+    <!-- CRIAR ENQUETE -->
+    <section id="tela-criar" hidden>
+      <h2>Criar enquete de aulão</h2>
+      <form id="form-enquete" novalidate>
+        <label for="titulo">Título da enquete:</label>
+        <input type="text" id="titulo" maxlength="120"
+               placeholder="EX.: Qual tema você gostaria de revisar no aulão?">
+
+        <label for="materia">Matéria:</label>
+        <select id="materia">
+          <option value="">Selecione...</option>
+          <option>AEDs1</option>
+          <option>AEDs2</option>
+          <option>Cálculo 1</option>
+          <option>Cálculo 2</option>
+          <option>Matemática Discreta</option>
+          <option>Banco de dados 1</option>
+          <option>DIW</option>
+          <option>Engenharia de Software 1</option>
+        </select>
+
+        <label>Opções de temas:</label>
+        <div id="opcoes-campos"></div>
+        <button id="btn-add-opcao" type="button">[ + adicionar opção ]</button>
+
+        <p id="erro" role="alert"></p>
+
+        <div class="barra">
+          <button id="btn-cancelar" type="button">[ Cancelar ]</button>
+          <button type="submit">[ Criar enquete ]</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- VOTAR -->
+    <section id="tela-votar" hidden>
+      <h2>Votar</h2>
+      <p id="votar-titulo"></p>
+      <p id="votar-materia"></p>
+      <form id="form-voto">
+        <div id="votar-opcoes"></div>
+        <p id="erro-voto" role="alert"></p>
+        <div class="barra">
+          <button type="button" id="btn-votar-voltar">[ Voltar às enquetes ]</button>
+          <button type="submit">[ Confirmar voto ]</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- RESULTADO -->
+    <section id="tela-resultado" hidden>
+      <h2>RESULTADO DA ENQUETE</h2>
+      <p id="res-titulo"></p>
+      <p><strong>Matéria:</strong> <span id="res-materia"></span></p>
+      <p><strong>Total de votos:</strong> <span id="res-total"></span></p>
+      <h3>RESULTADOS:</h3>
+      <div id="res-grafico"></div>
+      <div class="barra">
+        <button type="button" id="btn-res-voltar">[ Voltar às enquetes ]</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

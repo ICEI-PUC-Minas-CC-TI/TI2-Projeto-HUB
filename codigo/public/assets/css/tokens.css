@@ -1,0 +1,161 @@
+/* =====================================================================
+   Hub de Estudos · tokens (cores, fontes, espaços, raios e sombras)
+   ---------------------------------------------------------------------
+   Tudo que é cor ou medida no site sai daqui. Para mudar a aparência,
+   troque o valor da variável; não escreva cor solta nos componentes.
+   Tema escuro: <html data-tema="escuro"> (o mesmo atributo do protótipo).
+   ===================================================================== */
+
+/* As fontes vêm do Google Fonts. Ponha no <head> de cada página, antes deste arquivo:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400..700&family=Atkinson+Hyperlegible+Next:wght@400..700&display=swap"> */
+
+:root {
+
+  /* ---------- fundos ---------- */
+  --fundo: #f5f8f9;                   /* Fundo da página, atrás dos cartões. */
+  --superficie: #ffffff;              /* Cartões, cabeçalho, campos, menus e modais. */
+  --superficie-2: #edf2f4;            /* Áreas internas de um cartão, linha da tabela em hover, bolha recebida. */
+  --preenchimento: #dee5e7;           /* Trilha das barras, esqueleto de carregamento. */
+
+  /* ---------- texto ---------- */
+  --texto: #0e1c1f;                   /* Texto principal e títulos sobre fundo, superficie e superficie-2. */
+  --texto-2: #3c4b4e;                 /* Texto de apoio sobre fundo, superficie e superficie-2. */
+  --texto-suave: #556367;             /* Legendas, datas e texto de exemplo dos campos sobre fundo, superficie e superficie-2. */
+
+  /* ---------- bordas ---------- */
+  --borda: #dee5e7;                   /* Contorno de cartões e linhas divisórias. Só separa, não carrega significado. */
+  --borda-forte: #cad3d5;             /* Contorno do cartão em hover e divisória mais marcada. */
+  --borda-campo: #828f92;             /* Contorno de campos, caixas de marcar, chips e botão secundário (3:1 sobre superficie). */
+
+  /* ---------- ação: verde-petróleo ---------- */
+  --acao: #006b74;                    /* Botão principal, chip e opção ligados, barras de progresso e gráficos de uma série só. */
+  --acao-hover: #03535a;              /* O mesmo que acao, com o mouse em cima ou pressionado. */
+  --sobre-acao: #ffffff;              /* Texto e ícone em cima de acao e acao-hover. */
+  --acao-texto: #03535a;              /* Links e texto em petróleo sobre fundo, superficie, superficie-2 e acao-suave. */
+  --acao-suave: #dbf2f4;              /* Fundo do selo de informação, do avatar com iniciais e da barra da enquete. */
+  --foco: #006b74;                    /* Anel de foco do teclado, 2px, em qualquer superfície. */
+  --bolha-minha: #006b74;             /* Fundo da mensagem enviada por quem está usando. */
+  --sobre-bolha-minha: #ffffff;       /* Texto em cima de bolha-minha. */
+
+  /* ---------- destaque: amarelo de marca-texto ---------- */
+  --marca-texto: #fddb72;             /* Fundo do trecho encontrado na busca e faixa do item atual do menu. */
+  --sobre-marca-texto: #0e1c1f;       /* Texto em cima de marca-texto. */
+  --destaque: #fbc629;                /* Estrela de favorito preenchida, ponto de novidade e contador de avisos. */
+  --sobre-destaque: #061114;          /* Número em cima de destaque. */
+
+  /* ---------- estados ---------- */
+  --sucesso: #00764c;                 /* Ícone e ponto de algo concluído. Sempre junto de uma palavra. */
+  --sucesso-fundo: #d7f6e4;           /* Fundo do selo de sucesso. */
+  --sucesso-texto: #025c3b;           /* Texto sobre sucesso-fundo e superficie. */
+  --aviso: #bb6802;                   /* Ícone e barra de atenção (prazo perto, limite de faltas). Sempre junto de uma palavra. */
+  --aviso-fundo: #ffeddb;             /* Fundo do selo de atenção. */
+  --aviso-texto: #713f11;             /* Texto sobre aviso-fundo e superficie. */
+  --perigo: #be2323;                  /* Botão de excluir, selo cheio de estado ruim, contorno de campo com erro. */
+  --perigo-hover: #991618;            /* O mesmo que perigo, com o mouse em cima. */
+  --sobre-perigo: #ffffff;            /* Texto e ícone em cima de perigo e perigo-hover. */
+  --perigo-fundo: #fee4e1;            /* Fundo do aviso de erro. */
+  --perigo-texto: #991618;            /* Mensagem de erro sobre perigo-fundo e superficie. */
+
+  /* ---------- cor por matéria (ordem fixa, sempre com a sigla) ---------- */
+  --mat-1: #1f5dc2;                   /* Matéria 1 (azul). Quadradinho da etiqueta, aba do cartão e barrinha do calendário; nunca como cor de texto. */
+  --mat-2: #959609;                   /* Matéria 2 (mostarda). */
+  --mat-3: #852381;                   /* Matéria 3 (ameixa). */
+  --mat-4: #1c6701;                   /* Matéria 4 (folha). */
+  --mat-5: #a072e6;                   /* Matéria 5 (lilás). */
+  --mat-6: #ce4a72;                   /* Matéria 6 (framboesa). */
+
+  /* ---------- véu do modal ---------- */
+  --veu: rgba(6, 17, 20, 0.5);        /* Camada escura atrás do modal. */
+
+  /* ---------- sombras ---------- */
+  --sombra-1: 0 1px 2px rgba(1, 61, 67, 0.06), 0 2px 8px rgba(1, 61, 67, 0.06);
+  --sombra-2: 0 2px 4px rgba(1, 61, 67, 0.06), 0 8px 24px rgba(1, 61, 67, 0.1);
+  --sombra-3: 0 12px 40px rgba(1, 61, 67, 0.18);
+
+  /* ---------- espaços: escala de 4 ---------- */
+  --esp-1: 4px;         /* Entre ícone e texto dentro de um selo. */
+  --esp-2: 8px;         /* Entre itens colados: ícone e rótulo do botão, chips de uma fila. */
+  --esp-3: 12px;        /* Dentro de campos e botões; entre linhas de um cartão. */
+  --esp-4: 16px;        /* Respiro interno dos cartões no celular; margem lateral da página. */
+  --esp-5: 24px;        /* Respiro interno dos cartões no desktop; entre cartões de uma grade. */
+  --esp-6: 32px;        /* Entre seções de uma página. */
+  --esp-7: 48px;        /* Topo e base da página. */
+
+  /* ---------- cantos ---------- */
+  --raio-ponto: 3px;        /* Quadradinho da matéria, marca-texto e barrinha do calendário. */
+  --raio-selo: 6px;         /* Selos de situação e etiqueta de matéria: informam, não são clicáveis. */
+  --raio-interno: 8px;      /* O que mora dentro de um controle: item de sugestão, dia do calendário. */
+  --raio-controle: 12px;    /* Botões, campos, opção do segmentado, aba do cartão de matéria. */
+  --raio-cartao: 18px;      /* Cartões, avisos e painéis. */
+  --raio-janela: 26px;      /* Modal e folha que sobe no celular. */
+  --raio-pilula: 999px;     /* Chips de filtro, avatar, contador: tudo que é clicável e pequeno. */
+
+  /* ---------- fontes ---------- */
+  --font-texto: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  color-scheme: light;
+}
+
+/* ---------- tema escuro: só as cores e as sombras mudam ---------- */
+[data-tema="escuro"] {
+  --fundo: #041d21;
+  --superficie: #09282c;
+  --superficie-2: #133338;
+  --preenchimento: #224348;
+  --texto: #e9f0f1;
+  --texto-2: #c4d0d2;
+  --texto-suave: #a2b1b4;
+  --borda: #244044;
+  --borda-forte: #3c585c;
+  --borda-campo: #6f898d;
+  --acao: #86cbd3;
+  --acao-hover: #b9e4e9;
+  --sobre-acao: #001a1d;
+  --acao-texto: #86cbd3;
+  --acao-suave: #0f454b;
+  --foco: #86cbd3;
+  --bolha-minha: #005e66;
+  --sobre-bolha-minha: #e9f0f1;
+  --marca-texto: #6f5803;
+  --sobre-marca-texto: #fcf2cd;
+  --destaque: #fbc629;
+  --sobre-destaque: #061114;
+  --sucesso: #44b782;
+  --sucesso-fundo: #183e2b;
+  --sucesso-texto: #7ad4a5;
+  --aviso: #fb9f44;
+  --aviso-fundo: #492e15;
+  --aviso-texto: #fece96;
+  --perigo: #f27166;
+  --perigo-hover: #fda297;
+  --sobre-perigo: #290b09;
+  --perigo-fundo: #542521;
+  --perigo-texto: #fda297;
+  --mat-1: #3270d6;
+  --mat-2: #afaf08;
+  --mat-3: #a947a3;
+  --mat-4: #3e9727;
+  --mat-5: #b88dfe;
+  --mat-6: #f26a90;
+  --veu: rgba(0, 0, 0, 0.62);
+  --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sombra-2: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --sombra-3: 0 16px 48px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+/* ---------- estilos de texto ---------- */
+.titulo-1 { font-family: var(--font-texto); font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.01em; }                          /* Título da página. Um por tela. */
+.titulo-2 { font-family: var(--font-texto); font-size: 21px; line-height: 28px; font-weight: 700; letter-spacing: -0.005em; }                         /* Título de seção. */
+.titulo-3 { font-family: var(--font-texto); font-size: 17px; line-height: 24px; font-weight: 600; }                                                   /* Título de cartão e de item de lista. */
+.titulo-4 { font-family: var(--font-texto); font-size: 15px; line-height: 20px; font-weight: 600; }                                                   /* Título de linha: item de lista, evento, horário, aviso. */
+.corpo { font-family: var(--font-texto); font-size: 16px; line-height: 24px; font-weight: 400; }                                                      /* Texto corrido, campos, botões, abas e mensagens. */
+.corpo-menor { font-family: var(--font-texto); font-size: 14px; line-height: 20px; font-weight: 400; }                                                /* Texto de apoio dentro dos cartões e células de tabela. */
+.rotulo { font-family: var(--font-texto); font-size: 14px; line-height: 20px; font-weight: 600; }                                                     /* Rótulo de campo, cabeçalho de tabela, texto de selo e chip. */
+.legenda { font-family: var(--font-texto); font-size: 13px; line-height: 18px; font-weight: 400; }                                                    /* Datas, ajuda de campo e notas de rodapé. */
+.sigla { font-family: var(--font-mono); font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-variant-numeric: tabular-nums; }/* Sigla de matéria, sempre em maiúsculas. */
+.numero { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }                  /* Número sozinho em coluna: células de tabela e valores do gráfico. */
+.numero-grande { font-family: var(--font-mono); font-size: 24px; line-height: 28px; font-weight: 600; font-variant-numeric: tabular-nums; }           /* Número dos indicadores. */

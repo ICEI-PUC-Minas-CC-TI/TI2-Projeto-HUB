@@ -1,1 +1,242 @@
-{}
+{
+  "usuarios": [
+    {
+      "id": 507,
+      "nome": "Lucas Coelho",
+      "emailInstitucional": "lucas.coelho@sga.pucminas.br",
+      "senha": "HASH_FICTICIO_507",
+      "matricula": "1649061",
+      "curso": "Ciência da Computação",
+      "periodo": 2,
+      "turno": 1,
+      "dataCadastro": "2026-08-03",
+      "linkCalendario": "https://hub.exemplo.br/calendario/507.ics",
+      "administrador": false,
+      "preferencia": {
+        "tema": 1,
+        "tamanhoFonte": 12,
+        "densidade": 1,
+        "idioma": "pt-BR",
+        "visibilidadePerfil": 1,
+        "mostrarOnline": true,
+        "acessibilidade": {
+          "altoContraste": false,
+          "reduzirAnimacoes": false,
+          "leitorTela": false,
+          "atalhosTeclado": true,
+          "focoReforcado": false
+        },
+        "verificacaoDuasEtapas": false
+      },
+      "preferenciasNotificacao": [
+        {
+          "tipoNotificacao": 1,
+          "noAplicativo": true,
+          "porEmail": true
+        }
+      ]
+    },
+    {
+      "id": 601,
+      "nome": "Lucas Andrade",
+      "emailInstitucional": "lucas.andrade@sga.pucminas.br",
+      "senha": "HASH_FICTICIO_601",
+      "matricula": "791203",
+      "curso": "Ciência da Computação",
+      "periodo": 6,
+      "turno": 1,
+      "dataCadastro": "2026-07-28",
+      "linkCalendario": "https://hub.exemplo.br/calendario/601.ics",
+      "administrador": false,
+      "preferencia": {
+        "tema": 2,
+        "tamanhoFonte": 12,
+        "densidade": 1,
+        "idioma": "pt-BR",
+        "visibilidadePerfil": 1,
+        "mostrarOnline": true,
+        "acessibilidade": {
+          "altoContraste": false,
+          "reduzirAnimacoes": false,
+          "leitorTela": false,
+          "atalhosTeclado": true,
+          "focoReforcado": false
+        },
+        "verificacaoDuasEtapas": true
+      },
+      "preferenciasNotificacao": [
+        {
+          "tipoNotificacao": 1,
+          "noAplicativo": true,
+          "porEmail": false
+        }
+      ]
+    }
+  ],
+  "materias": [
+    {
+      "id": 11,
+      "sigla": "CALC1",
+      "nome": "Cálculo I",
+      "apelidos": ["calc", "calc1", "cálculo 1"],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 21,
+      "sigla": "AEDS2",
+      "nome": "Algoritmos e Estruturas de Dados II",
+      "apelidos": ["aeds", "aeds2", "aeds 2"],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 22,
+      "sigla": "AEDS1",
+      "nome": "Algoritmos e Estruturas de Dados I",
+      "apelidos": ["aeds1", "aeds 1", "algoritmos 1"],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 31,
+      "sigla": "MD",
+      "nome": "Matemática Discreta",
+      "apelidos": ["discreta", "mat discreta"],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 41,
+      "sigla": "DIW",
+      "nome": "Desenvolvimento de Interfaces Web",
+      "apelidos": ["diw", "interfaces web"],
+      "turmas_cadastradas": []
+    },
+    {
+      "id": 51,
+      "sigla": "BD1",
+      "nome": "Banco de Dados I",
+      "apelidos": ["bd", "bd1", "banco de dados"],
+      "turmas_cadastradas": []
+    }
+  ],
+  "temas": [
+    { "id": 1, "materiaId": 11, "titulo": "Limites e continuidade", "ordem": 1, "progressos": [] },
+    { "id": 2, "materiaId": 11, "titulo": "Derivadas", "ordem": 2, "progressos": [] },
+    { "id": 3, "materiaId": 21, "titulo": "Análise de complexidade", "ordem": 1, "progressos": [] },
+    { "id": 4, "materiaId": 21, "titulo": "Ordenação", "ordem": 2, "progressos": [] },
+    { "id": 5, "materiaId": 21, "titulo": "Árvores", "ordem": 3, "progressos": [] },
+    { "id": 6, "materiaId": 21, "titulo": "Tabelas hash", "ordem": 4, "progressos": [] },
+    { "id": 7, "materiaId": 22, "titulo": "Ponteiros", "ordem": 1, "progressos": [] },
+    { "id": 8, "materiaId": 22, "titulo": "Recursividade", "ordem": 2, "progressos": [] },
+    { "id": 9, "materiaId": 31, "titulo": "Indução matemática", "ordem": 1, "progressos": [] },
+    { "id": 10, "materiaId": 31, "titulo": "Grafos", "ordem": 2, "progressos": [] },
+    { "id": 11, "materiaId": 41, "titulo": "HTML e CSS", "ordem": 1, "progressos": [] },
+    { "id": 12, "materiaId": 41, "titulo": "JavaScript e DOM", "ordem": 2, "progressos": [] },
+    { "id": 13, "materiaId": 51, "titulo": "Modelagem conceitual", "ordem": 1, "progressos": [] }
+  ],
+  "conteudos": [
+    {
+      "id": 1,
+      "titulo": "Resumo de árvores AVL",
+      "descricao": "Rotações simples e duplas, fator de balanceamento e um exemplo de inserção passo a passo.",
+      "tipo": 1,
+      "palavrasChave": ["árvore", "avl", "balanceamento"],
+      "materiaId": 21,
+      "temaId": 5,
+      "autorId": 507,
+      "revisorId": null,
+      "dataPublicacao": "2026-10-05T14:30:00",
+      "arquivo": {
+        "nome": "resumo-arvores-avl.pdf",
+        "formato": 1,
+        "tamanhoMb": 1.2,
+        "endereco": "https://arquivos.exemplo.br/conteudos/resumo-arvores-avl.pdf"
+      },
+      "interacoes": [],
+      "acessos": [],
+      "comentarios": []
+    },
+    {
+      "id": 2,
+      "titulo": "Lista de exercícios de ponteiros",
+      "descricao": "Dez exercícios de ponteiros em C, do básico (endereço e valor) até ponteiro para ponteiro, com gabarito no fim.",
+      "tipo": 2,
+      "palavrasChave": ["ponteiro", "c", "memória"],
+      "materiaId": 22,
+      "temaId": 7,
+      "autorId": 507,
+      "revisorId": 601,
+      "dataPublicacao": "2026-09-29T19:10:00",
+      "arquivo": {
+        "nome": "lista-ponteiros.pdf",
+        "formato": 1,
+        "tamanhoMb": 0.4,
+        "endereco": "https://arquivos.exemplo.br/conteudos/lista-ponteiros.pdf"
+      },
+      "interacoes": [],
+      "acessos": [],
+      "comentarios": []
+    },
+    {
+      "id": 3,
+      "titulo": "Slides de heap e heapsort",
+      "descricao": "Heap máximo no vetor, inserção e remoção, e a análise do heapsort.",
+      "tipo": 1,
+      "palavrasChave": ["heap", "heapsort", "ordenação"],
+      "materiaId": 21,
+      "temaId": 4,
+      "autorId": 507,
+      "revisorId": null,
+      "dataPublicacao": "2026-10-12T10:00:00",
+      "arquivo": {
+        "nome": "slides-heap.pptx",
+        "formato": 4,
+        "tamanhoMb": 3.8,
+        "endereco": "https://arquivos.exemplo.br/conteudos/slides-heap.pptx"
+      },
+      "interacoes": [],
+      "acessos": [],
+      "comentarios": []
+    },
+    {
+      "id": 4,
+      "titulo": "Exercícios de indução resolvidos",
+      "descricao": "Seis provas por indução com o passo base e o passo indutivo comentados.",
+      "tipo": 2,
+      "palavrasChave": ["indução", "prova", "somatório"],
+      "materiaId": 31,
+      "temaId": 9,
+      "autorId": 507,
+      "revisorId": null,
+      "dataPublicacao": "2026-10-08T21:45:00",
+      "arquivo": {
+        "nome": "inducao-resolvidos.html",
+        "formato": 2,
+        "tamanhoMb": 0.3,
+        "endereco": "https://arquivos.exemplo.br/conteudos/inducao-resolvidos.html"
+      },
+      "interacoes": [],
+      "acessos": [],
+      "comentarios": []
+    },
+    {
+      "id": 5,
+      "titulo": "Limites sem mistério",
+      "descricao": "Resumo com exemplos resolvidos de limites laterais, limites no infinito e continuidade.",
+      "tipo": 1,
+      "palavrasChave": ["limites", "continuidade", "limite lateral"],
+      "materiaId": 11,
+      "temaId": 1,
+      "autorId": 601,
+      "revisorId": null,
+      "dataPublicacao": "2026-09-10T14:30:00",
+      "arquivo": {
+        "nome": "limites-sem-misterio.html",
+        "formato": 2,
+        "tamanhoMb": 0.6,
+        "endereco": "https://arquivos.exemplo.br/conteudos/limites-sem-misterio.html"
+      },
+      "interacoes": [],
+      "acessos": [],
+      "comentarios": []
+    }
+  ]
+}

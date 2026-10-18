@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro de estudos e conteúdos · Hub de Estudos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400..700&family=Atkinson+Hyperlegible+Next:wght@400..700&display=swap">
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/componentes.css">
+  <link rel="stylesheet" href="cadastro-estudos.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <a class="marca" href="cadastro-estudos.html">Hub de Estudos</a>
+    <nav class="cabecalho__nav" aria-label="Principal">
+      <a class="cabecalho__link" href="cadastro-estudos.html" aria-current="page">Estudos</a>
+      <span class="cabecalho__link cabecalho__link--off" title="Funcionalidade de outro integrante">Exercícios</span>
+      <span class="cabecalho__link cabecalho__link--off" title="Funcionalidade de outro integrante">Dúvidas</span>
+      <span class="cabecalho__link cabecalho__link--off" title="Funcionalidade de outro integrante">Monitoria</span>
+      <span class="cabecalho__link cabecalho__link--off" title="Funcionalidade de outro integrante">Calendário</span>
+    </nav>
+    <div class="cabecalho__fim">
+      <span class="avatar" id="avatar" aria-label="Lucas Coelho">LC</span>
+    </div>
+  </header>
+
+  <main class="pagina">
+    <div class="pagina__topo">
+      <h1 class="titulo-1">Cadastro de estudos e conteúdos</h1>
+      <p class="pagina__intro">Publique resumos, listas de exercícios, projetos e provas antigas para a turma. Tudo que você publica aqui entra no catálogo de estudos.</p>
+    </div>
+
+    <div id="aviso-servidor" hidden></div>
+
+    <div class="pagina__grade">
+      <section class="cartao painel" aria-labelledby="titulo-form">
+        <h2 class="titulo-2" id="titulo-form">Novo material</h2>
+        <p class="painel__ajuda" id="ajuda-form">Campos com * são obrigatórios.</p>
+
+        <form id="form-conteudo" class="formulario" novalidate aria-describedby="ajuda-form">
+          <div class="campo-grupo">
+            <label class="campo-grupo__rotulo" for="titulo">Título *</label>
+            <input class="campo" id="titulo" name="titulo" type="text" maxlength="100" placeholder="Ex.: Resumo de árvores AVL" aria-describedby="titulo-ajuda">
+            <span class="campo-grupo__ajuda" id="titulo-ajuda">De 3 a 100 letras.</span>
+          </div>
+
+          <div class="formulario__linha">
+            <div class="campo-grupo">
+              <label class="campo-grupo__rotulo" for="materia">Matéria *</label>
+              <div class="campo-select">
+                <select class="campo" id="materia" name="materia">
+                  <option value="">Escolha a matéria</option>
+                </select>
+              </div>
+            </div>
+            <div class="campo-grupo">
+              <label class="campo-grupo__rotulo" for="tema">Tema</label>
+              <div class="campo-select">
+                <select class="campo" id="tema" name="tema" disabled>
+                  <option value="">Escolha a matéria antes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="campo-grupo">
+            <label class="campo-grupo__rotulo" for="tipo">Tipo de material *</label>
+            <div class="campo-select">
+              <select class="campo" id="tipo" name="tipo">
+                <option value="">Escolha o tipo</option>
+                <option value="1">Estudo (resumo, slides, anotações)</option>
+                <option value="2">Exercício (lista, questões resolvidas)</option>
+                <option value="3">Projeto</option>
+                <option value="4">Prova (prova antiga, simulado)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="campo-grupo">
+            <label class="campo-grupo__rotulo" for="descricao">Descrição *</label>
+            <textarea class="campo" id="descricao" name="descricao" rows="4" maxlength="1000" placeholder="O que o material explica e para quem ele serve" aria-describedby="descricao-ajuda"></textarea>
+            <span class="campo-grupo__ajuda" id="descricao-ajuda">Pelo menos 10 letras. A descrição aparece no cartão do catálogo.</span>
+          </div>
+
+          <div class="campo-grupo">
+            <label class="campo-grupo__rotulo" for="palavra">Palavras-chave *</label>
+            <div class="tags" id="tags">
+              <ul class="tags__lista" id="tags-lista" aria-label="Palavras-chave adicionadas"></ul>
+              <input class="tags__entrada" id="palavra" type="text" maxlength="30" placeholder="Digite e aperte Enter" aria-describedby="palavra-ajuda">
+            </div>
+            <span class="campo-grupo__ajuda" id="palavra-ajuda">Enter ou vírgula adiciona. Até 10 palavras. São usadas na busca do catálogo.</span>
+          </div>
+
+          <fieldset class="arquivo">
+            <legend class="titulo-4">Arquivo do material</legend>
+            <div class="campo-grupo">
+              <span class="campo-grupo__rotulo" id="arquivo-local-rotulo">Arquivo do computador</span>
+              <div class="arquivo__escolha">
+                <input class="sr arquivo__local" id="arquivo-local" type="file" accept=".pdf,.html,.htm,.docx,.pptx,.png,.jpg,.jpeg,.mp4" aria-labelledby="arquivo-local-rotulo" aria-describedby="arquivo-local-nome arquivo-local-ajuda">
+                <label class="btn btn--sec btn--pequeno" for="arquivo-local">Escolher arquivo</label>
+                <span class="arquivo__nome" id="arquivo-local-nome">Nenhum arquivo escolhido</span>
+              </div>
+              <span class="campo-grupo__ajuda" id="arquivo-local-ajuda">Opcional. Preenche nome, formato e tamanho sozinho.</span>
+            </div>
+            <div class="campo-grupo">
+              <label class="campo-grupo__rotulo" for="endereco">Link do arquivo *</label>
+              <input class="campo" id="endereco" name="endereco" type="url" placeholder="https://..." aria-describedby="endereco-ajuda">
+              <span class="campo-grupo__ajuda" id="endereco-ajuda">Onde o arquivo está guardado (Drive, OneDrive, GitHub, site da matéria).</span>
+            </div>
+            <div class="formulario__linha formulario__linha--3">
+              <div class="campo-grupo">
+                <label class="campo-grupo__rotulo" for="nome-arquivo">Nome do arquivo *</label>
+                <input class="campo" id="nome-arquivo" name="nomeArquivo" type="text" maxlength="120" placeholder="resumo-avl.pdf">
+              </div>
+              <div class="campo-grupo">
+                <label class="campo-grupo__rotulo" for="formato">Formato *</label>
+                <div class="campo-select">
+                  <select class="campo" id="formato" name="formato">
+                    <option value="">Escolha</option>
+                    <option value="1">PDF</option>
+                    <option value="2">HTML</option>
+                    <option value="3">DOCX</option>
+                    <option value="4">PPTX</option>
+                    <option value="5">PNG</option>
+                    <option value="6">JPG</option>
+                    <option value="7">MP4</option>
+                  </select>
+                </div>
+              </div>
+              <div class="campo-grupo">
+                <label class="campo-grupo__rotulo" for="tamanho">Tamanho (MB) *</label>
+                <input class="campo" id="tamanho" name="tamanho" type="text" inputmode="decimal" maxlength="8" placeholder="1,2">
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="formulario__acoes">
+            <button class="btn" type="submit" id="btn-salvar">Publicar material</button>
+            <button class="btn btn--sec" type="button" id="btn-limpar">Limpar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="cartao painel" aria-labelledby="titulo-lista">
+        <div class="painel__topo">
+          <h2 class="titulo-2" id="titulo-lista">Meus materiais publicados</h2>
+          <span class="painel__contador" id="contador" aria-live="polite"></span>
+        </div>
+        <div class="tabela-rolagem" id="tabela-area">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Material</th>
+                <th>Matéria</th>
+                <th>Tipo</th>
+                <th class="num">Publicado</th>
+                <th><span class="sr">Ações</span></th>
+              </tr>
+            </thead>
+            <tbody id="tabela-corpo"></tbody>
+          </table>
+        </div>
+        <div class="vazio" id="vazio" hidden>
+          <span class="vazio__icone"><svg class="ic ic--24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h6"/></svg></span>
+          <div>
+            <p class="vazio__titulo">Você ainda não publicou nenhum material</p>
+            <p class="vazio__texto">Preencha o formulário para publicar o primeiro. Ele aparece aqui e no catálogo de estudos.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast-area"><div class="toast" id="toast" role="status" hidden></div></div>
+
+  <div class="veu veu--fixo" id="veu" hidden>
+    <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="modal-titulo" aria-describedby="modal-texto">
+      <h2 class="modal__titulo" id="modal-titulo">Excluir material?</h2>
+      <p class="modal__texto" id="modal-texto"></p>
+      <div class="modal__acoes">
+        <button class="btn btn--sec" type="button" id="btn-cancelar-exclusao">Cancelar</button>
+        <button class="btn btn--perigo" type="button" id="btn-confirmar-exclusao">Excluir material</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="cadastro-estudos.js"></script>
+</body>
+</html>

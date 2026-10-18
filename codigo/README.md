@@ -13,13 +13,21 @@ codigo/  (essa pasta aqui)
 ├── public/ (o site - front end)
 │   ├── assets/
 │   │   ├── css/
-│   │   │   ├── inicio.css     (estilo do index.html)
-│   │   │   ├── prototipo.css  (estilo do prototipo.html)
-│   │   │   └── mobile.css     (estilo do hub-mobile.html)
+│   │   │   ├── tokens.css      (cores, fontes e espaços do guia visual)
+│   │   │   ├── componentes.css (botões, cartões, campos e tabelas do guia visual)
+│   │   │   ├── inicio.css      (estilo do index.html)
+│   │   │   ├── prototipo.css   (estilo do prototipo.html)
+│   │   │   └── mobile.css      (estilo do hub-mobile.html)
 │   │   │
 │   │   └── js/
 │   │       ├── prototipo.js   (telas e eventos do desktop)
 │   │       └── mobile.js      (telas e eventos do celular)
+│   │
+│   ├── modulos/ (uma pasta por funcionalidade das sprints)
+│   │   └── estudos/
+│   │       ├── cadastro-estudos.html (cadastro de estudos e conteúdos)
+│   │       ├── cadastro-estudos.css
+│   │       └── cadastro-estudos.js
 │   │
 │   ├── index.html      (página "Comece aqui": ponto de partida e tarefas do teste)
 │   ├── prototipo.html  (protótipo desktop)
@@ -35,7 +43,7 @@ O `package.json` que sobe o back end fica na raiz do repositório.
 Todos os arquivos da parte de Front End ficam na pasta `public`:
 
 * Pasta `assets`: os arquivos de formatação (CSS) e os scripts (JS) usados pelo site.
-* Pasta `modulos` (a criar): uma sub-pasta para cada funcionalidade implementada nas próximas sprints.
+* Pasta `modulos`: uma sub-pasta para cada funcionalidade implementada nas sprints.
 * Arquivo `index.html`: a "home page" do site.
 
 ## Parte Back End
@@ -59,6 +67,18 @@ $> npm start
 O site fica disponível em <http://localhost:3000>.
 
 O protótipo atual não depende do back end: também dá para abrir o `public/index.html` direto no navegador.
+
+## Funcionalidades das sprints
+
+| Funcionalidade | Sprint | Integrante | Endereço |
+| -------------- | ------ | ---------- | -------- |
+| Cadastro de estudos e conteúdos (CRUD de `conteudos`) | 1 | Lucas Coelho Diniz | <http://localhost:3000/modulos/estudos/cadastro-estudos.html> |
+
+### Cadastro de estudos e conteúdos
+
+Publica, lista, altera e exclui materiais de estudo (resumos, listas de exercícios, projetos e provas). Usa as coleções `conteudos`, `materias`, `temas` e `usuarios` do `db.json`, no formato do esquema do banco da equipe. Como o login fica para a Sprint 2, o autor é fixo: Lucas Coelho (`usuarios.id` 507).
+
+Requisições: `GET /conteudos?autorId=507&_sort=dataPublicacao&_order=desc`, `POST /conteudos`, `PATCH /conteudos/:id` e `DELETE /conteudos/:id`, além de `GET /materias`, `GET /temas` e `GET /usuarios/507`.
 
 ## Protótipo interativo
 

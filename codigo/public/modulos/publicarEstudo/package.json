@@ -1,0 +1,16 @@
+{
+  "name": "hub-de-estudos",
+  "version": "1.0.0",
+  "description": "Hub de Estudos - Interface e CRUD com JSON-Server",
+  "main": "app.js",
+  "scripts": {
+    "server": "json-server --watch db.json --port 3000"
+  },
+  "keywords": [
+    "json-server",
+    "crud",
+    "bootstrap"
+  ],
+  "author": "",
+  "license": "ISC"
+}

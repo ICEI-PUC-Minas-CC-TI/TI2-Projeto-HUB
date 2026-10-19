@@ -1,0 +1,10 @@
+
+.log-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 150px;
+  max-height: 220px;
+  overflow-y: auto;
+  white-space: pre-line;
+  margin-top: 10px;
+}

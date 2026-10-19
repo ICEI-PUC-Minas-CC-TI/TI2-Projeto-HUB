@@ -1,1 +1,49 @@
-{}
+{
+  "estudos": [
+    {
+      "titulo": "Atividade de calculo",
+      "descricao": "Atividade de calculo I voltada para o conceito de logaritimos",
+      "diciplina": 1,
+      "ArquivoPath": [
+        "/tmp/index.html, /tmp/atividadeCalculo.html, /tmp/atividadeEnunciado.html"
+      ],
+      "id": 1
+    },
+    {
+      "id": 2,
+      "titulo": "Resumo AEDS I",
+      "descricao": "Estruturas de dados básicas em C e C++",
+      "diciplina": 2,
+      "ArquivoPath": [
+        "/tmp/aeds1.html"
+      ]
+    },
+    {
+      "titulo": "ffffff",
+      "descricao": "fffffff",
+      "diciplina": 1,
+      "ArquivoPath": [
+        "ffffff"
+      ],
+      "id": 3
+    }
+  ],
+  "importEstudos": [
+    {
+      "titulo": "Java - Primeiros passos",
+      "descricao": "Introdução a sintaxe da linguagem Java"
+    },
+    {
+      "titulo": "C e C++ - Resumo AEDS I",
+      "descricao": "Ponteiros, vetores e alocacao dinamica"
+    },
+    {
+      "titulo": "Calculo 2 - Guia de Integrais",
+      "descricao": "Metodos de integração por partes e substituicao"
+    },
+    {
+      "titulo": "",
+      "descricao": "Test erro"
+    }
+  ]
+}

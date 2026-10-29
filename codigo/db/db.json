@@ -173,6 +173,42 @@
       "data": "2026-11-03",
       "hora": "23:59",
       "sala": ""
+    },
+    {
+      "id": 13,
+      "titulo": "Trabalho Prático 2",
+      "materiaId": 41,
+      "tipo": "trabalho",
+      "data": "2026-11-05",
+      "hora": "23:59",
+      "sala": ""
+    },
+    {
+      "id": 14,
+      "titulo": "Quiz - Fetch e APIs",
+      "materiaId": 41,
+      "tipo": "quiz",
+      "data": "2026-11-09",
+      "hora": "21:00",
+      "sala": ""
+    },
+    {
+      "id": 15,
+      "titulo": "Aulão - Grafos",
+      "materiaId": 31,
+      "tipo": "aulao",
+      "data": "2026-11-11",
+      "hora": "19:00",
+      "sala": "203"
+    },
+    {
+      "id": 16,
+      "titulo": "Prova 3",
+      "materiaId": 21,
+      "tipo": "prova",
+      "data": "2026-11-17",
+      "hora": "10:00",
+      "sala": "104"
     }
   ]
 }

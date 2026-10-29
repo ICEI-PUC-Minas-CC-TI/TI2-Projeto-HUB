@@ -17,7 +17,7 @@ Para rodar, siga o [README.md](README.md): `npm install`, `npm start` na raiz do
 | Critério (nível Completo) | Como foi atendido | Onde ver |
 | --- | --- | --- |
 | Documentação da interface e da estrutura de dados | Este arquivo, o [README.md](README.md) e o documento "Orientação de Avaliação" | seções 3 e 4 abaixo |
-| Vários registros em JSON Server | 12 eventos e 6 matérias no `db.json`, servidos pelo JSON Server (API REST) | `codigo/db/db.json` e `http://localhost:3000/eventos` |
+| Vários registros em JSON Server | 16 eventos e 6 matérias no `db.json`, servidos pelo JSON Server (API REST) | `codigo/db/db.json` e `http://localhost:3000/eventos` |
 | Todas as operações do CRUD | Cadastrar (POST), ver (GET), alterar (PUT) e excluir (DELETE) | seção 2 abaixo |
 | Dados apresentados de forma estruturada e atualizados na hora | Calendário em grade mensal e lista do dia, redesenhados depois de cada operação, sem F5 | `montarCalendario` e `montarEventosDoDia` |
 | Código JavaScript sem erros | Console do navegador sem erros ao abrir e usar a tela | F12, aba Console |

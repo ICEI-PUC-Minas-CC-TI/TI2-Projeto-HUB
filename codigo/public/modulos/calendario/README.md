@@ -67,7 +67,7 @@ Toda mudança é gravada no `codigo/db/db.json` na hora. O calendário é redese
 
 ## Voltar aos dados iniciais
 
-O `db.json` muda a cada cadastro, alteração ou exclusão. Para voltar aos 12 eventos de exemplo:
+O `db.json` muda a cada cadastro, alteração ou exclusão. Para voltar aos 16 eventos de exemplo:
 
 - No repositório Git: `git checkout codigo/db/db.json`.
 - No ZIP de entrega: extraia o ZIP de novo.
@@ -84,3 +84,24 @@ codigo/public/modulos/calendario/
 codigo/db/db.json           dados (coleções materias e eventos)
 package.json                comandos npm (na raiz do projeto)
 ```
+
+---
+
+# Calendário acadêmico · Sprint 2 (em andamento)
+
+Tela de **apresentação** (AI): mostra os eventos cadastrados na tela acima, sem cadastrar nada.
+
+**Endereço:** http://localhost:3000/modulos/calendario/calendario-academico.html (com o `npm start` rodando)
+
+Feito até agora:
+
+- **Grade do mês** montada por JavaScript (DOM) com os eventos do JSON Server, cada um na cor da matéria. Dias que já passaram ficam apagados.
+- **Navegação:** `<` e `>` trocam o mês; **Hoje** volta para o mês atual e seleciona o dia de hoje (destacado na grade).
+- **Legenda** com a cor de cada matéria.
+- **Próximas entregas:** os próximos eventos a partir de hoje, em ordem de data, com "hoje", "amanhã" ou "faltam N dias" (amarelo até 7 dias, vermelho até 2). Clicar em um item leva o calendário até o dia dele.
+
+Leitura: `GET /materias` e `GET /eventos?_sort=data,hora&_order=asc,asc`.
+
+Falta (próximas etapas): filtros por matéria e por tipo, lista de eventos do dia selecionado e login com permissões por cargo.
+
+Arquivos: `calendario-academico.html`, `calendario-academico.css` e `calendario-academico.js`, nesta mesma pasta.

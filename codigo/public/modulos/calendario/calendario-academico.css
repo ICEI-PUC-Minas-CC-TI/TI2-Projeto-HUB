@@ -1,0 +1,249 @@
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.logo {
+    font-weight: bold;
+    color: #1e6f5c;
+}
+
+.titulo-pagina {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.caixa {
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.titulo-caixa {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.rodape {
+    padding: 20px 0px;
+    text-align: center;
+    color: gray;
+    font-size: 14px;
+}
+
+
+.topo-calendario {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.nome-mes {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
+    width: 190px;
+    text-align: center;
+}
+
+
+/* ===== Grade do mês ===== */
+
+.semana,
+.grade {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.semana div {
+    text-align: center;
+    font-size: 13px;
+    color: gray;
+    padding-bottom: 6px;
+}
+
+.dia {
+    min-height: 90px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 4px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.dia:hover {
+    border-color: #1e6f5c;
+}
+
+.dia.vazio {
+    border: none;
+    cursor: default;
+}
+
+.dia.selecionado {
+    border: 2px solid #1e6f5c;
+}
+
+.numero {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.dia.hoje .numero {
+    color: white;
+    background-color: #1e6f5c;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
+.evento-mini {
+    font-size: 11px;
+    margin-top: 3px;
+    padding-left: 4px;
+    border-left: 4px solid gray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.legenda {
+    margin-top: 12px;
+    font-size: 13px;
+    color: gray;
+}
+
+.legenda span {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.cor {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+/* ===== Eventos do dia ===== */
+
+.evento {
+    border-left: 5px solid gray;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+}
+
+.evento h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.evento p {
+    font-size: 13px;
+    color: gray;
+    margin: 2px 0px 6px 0px;
+}
+
+.sem-evento {
+    color: gray;
+    font-size: 14px;
+}
+
+.mensagem {
+    margin: 10px 0px 0px 0px;
+    font-size: 14px;
+    color: #1e6f5c;
+}
+
+/* ===== Celular ===== */
+
+@media screen and (max-width: 600px) {
+
+    .nome-mes {
+        width: auto;
+        font-size: 18px;
+    }
+
+
+    .dia {
+        min-height: 48px;
+    }
+
+    /* no celular não cabe o título, então aparece só a barrinha colorida */
+    .evento-mini {
+        font-size: 0px;
+        padding: 0px;
+        border-left: none;
+        border-top-width: 4px;
+        border-top-style: solid;
+    }
+}
+
+/* ===== Calendário acadêmico (Sprint 2) ===== */
+
+.dia.passado .numero {
+    color: #aaaaaa;
+}
+
+.dia.passado .evento-mini {
+    opacity: 0.55;
+}
+
+.lista-proximas {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.proxima {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    border-left: 5px solid gray;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.proxima:hover {
+    background-color: #f4f8f7;
+}
+
+.proxima h4 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.proxima p {
+    font-size: 13px;
+    color: gray;
+    margin: 2px 0px 0px 0px;
+}
+
+.faltam {
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    color: #555555;
+}
+
+.faltam.perto {
+    background-color: #fff3cd;
+    color: #7a5b00;
+}
+
+.faltam.urgente {
+    background-color: #f8d7da;
+    color: #a1232f;
+}

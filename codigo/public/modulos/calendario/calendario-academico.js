@@ -37,15 +37,13 @@ function formatarData(data) {
     return `${partes[2]}/${partes[1]}`;
 }
 
-// transforma "AAAA-MM-DD" em Date (meia-noite do horário local)
-function paraDate(data) {
-    const partes = data.split('-');
-    return new Date(partes[0], partes[1] - 1, partes[2]);
-}
-
+// quantos dias faltam de hoje até a data ("AAAA-MM-DD")
 function diasAte(data) {
+    const partes = data.split('-');
+    const dia = new Date(partes[0], partes[1] - 1, partes[2]);
+    const inicioDeHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
     const umDia = 1000 * 60 * 60 * 24;
-    return Math.round((paraDate(data) - paraDate(dataHoje)) / umDia);
+    return Math.round((dia - inicioDeHoje) / umDia);
 }
 
 function textoFaltam(dias) {
@@ -54,12 +52,8 @@ function textoFaltam(dias) {
     return `faltam ${dias} dias`;
 }
 
-function buscarMateria(id) {
-    return materias.find(m => m.id == id);
-}
-
 function siglaDaMateria(id) {
-    const materia = buscarMateria(id);
+    const materia = materias.find(m => m.id == id);
     if (materia) return materia.sigla;
     return '?';
 }
@@ -70,7 +64,7 @@ function corDaMateria(id) {
     return coresMaterias[posicao % coresMaterias.length];
 }
 
-// eventos de um dia, ordenados pela hora (sem hora = dia inteiro, vem primeiro)
+// eventos de um dia, ordenados pela hora
 function eventosDoDia(data) {
     const lista = eventos.filter(ev => ev.data === data);
     lista.sort((a, b) => a.hora > b.hora ? 1 : -1);
@@ -78,26 +72,20 @@ function eventosDoDia(data) {
 }
 
 function mostrarMensagem(texto) {
-    document.getElementById('mensagem').innerText = texto;
-}
-
-// evita que o texto cadastrado seja lido como HTML
-function textoSeguro(texto) {
-    return String(texto).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    document.getElementById('mensagem').textContent = texto;
 }
 
 
-// ===== Leitura do JSON Server =====
+// ===== Leitura do JSON Server (chamada no onload) =====
 
 async function carregarDados() {
     try {
-        const [respMaterias, respEventos] = await Promise.all([
-            fetch(URL_API + '/materias'),
-            fetch(URL_API + '/eventos?_sort=data,hora&_order=asc,asc')
-        ]);
-        if (!respMaterias.ok || !respEventos.ok) throw new Error('Resposta inválida do servidor');
-
+        const respMaterias = await fetch(URL_API + '/materias');
+        if (!respMaterias.ok) throw new Error(`Erro ${respMaterias.status}`);
         materias = await respMaterias.json();
+
+        const respEventos = await fetch(URL_API + '/eventos?_sort=data,hora&_order=asc,asc');
+        if (!respEventos.ok) throw new Error(`Erro ${respEventos.status}`);
         eventos = await respEventos.json();
 
         montarLegenda();
@@ -110,88 +98,97 @@ async function carregarDados() {
 }
 
 
-// ===== Montagem da tela (DOM) =====
+// ===== Montagem da tela (cópias dos modelos <template> do HTML) =====
 
 function montarLegenda() {
-    let html = '';
+    const legenda = document.getElementById('legenda');
+    legenda.innerHTML = '';
+
     materias.forEach(m => {
-        html += `<span><span class="cor" style="background-color: ${corDaMateria(m.id)}"></span>${textoSeguro(m.sigla)}</span>`;
+        const item = document.getElementById('modelo-legenda').content.cloneNode(true);
+        item.querySelector('.cor').style.backgroundColor = corDaMateria(m.id);
+        item.querySelector('.sigla').textContent = m.sigla;
+        legenda.appendChild(item);
     });
-    document.getElementById('legenda').innerHTML = html;
 }
 
 function montarCalendario() {
-    document.getElementById('tituloMes').innerText = `${nomesMeses[mesAtual]} de ${anoAtual}`;
+    document.getElementById('tituloMes').textContent = `${nomesMeses[mesAtual]} de ${anoAtual}`;
+
+    const grade = document.getElementById('grade');
+    grade.innerHTML = '';
 
     const primeiroDiaSemana = new Date(anoAtual, mesAtual, 1).getDay();   // 0 = domingo
     const totalDias = new Date(anoAtual, mesAtual + 1, 0).getDate();      // dia 0 do mês seguinte = último dia deste mês
 
-    let html = '';
-
     // espaços vazios antes do dia 1
     for (let i = 0; i < primeiroDiaSemana; i++) {
-        html += '<div class="dia vazio"></div>';
+        grade.appendChild(document.getElementById('modelo-vazio').content.cloneNode(true));
     }
 
-    for (let dia = 1; dia <= totalDias; dia++) {
-        const data = montarData(anoAtual, mesAtual + 1, dia);
+    for (let numero = 1; numero <= totalDias; numero++) {
+        const data = montarData(anoAtual, mesAtual + 1, numero);
 
-        let classes = 'dia';
-        if (data === dataHoje) classes += ' hoje';
-        if (data === diaSelecionado) classes += ' selecionado';
-        if (data < dataHoje) classes += ' passado';
+        const copia = document.getElementById('modelo-dia').content.cloneNode(true);
+        const dia = copia.querySelector('.dia');
+        dia.querySelector('.numero').textContent = numero;
 
-        let eventosHtml = '';
+        if (data === dataHoje) dia.classList.add('hoje');
+        if (data === diaSelecionado) dia.classList.add('selecionado');
+        if (data < dataHoje) dia.classList.add('passado');
+
+        dia.onclick = function () {
+            selecionarDia(data);
+        };
+
         eventosDoDia(data).forEach(ev => {
-            const dica = `${siglaDaMateria(ev.materiaId)} - ${nomesTipos[ev.tipo]}${ev.hora ? ' - ' + ev.hora : ''}`;
-            eventosHtml += `<div class="evento-mini" style="border-color: ${corDaMateria(ev.materiaId)}"
-                                title="${textoSeguro(dica)}">${textoSeguro(ev.titulo)}</div>`;
+            const mini = document.getElementById('modelo-evento-mini').content.cloneNode(true);
+            const barra = mini.querySelector('.evento-mini');
+            barra.textContent = ev.titulo;
+            barra.title = `${siglaDaMateria(ev.materiaId)} - ${nomesTipos[ev.tipo]} ${ev.hora}`;
+            barra.style.borderColor = corDaMateria(ev.materiaId);
+            dia.appendChild(mini);
         });
 
-        html += `<div class="${classes}" data-data="${data}">
-                    <span class="numero">${dia}</span>
-                    ${eventosHtml}
-                 </div>`;
+        grade.appendChild(copia);
     }
-
-    document.getElementById('grade').innerHTML = html;
 }
 
 function montarProximas() {
-    const proximas = eventos
-        .filter(ev => ev.data >= dataHoje)
-        .slice(0, LIMITE_PROXIMAS);
-
     const lista = document.getElementById('proximas');
+    lista.innerHTML = '';
 
-    if (proximas.length === 0) {
-        lista.innerHTML = '<li class="sem-evento">Nenhuma entrega pela frente.</li>';
-        return;
-    }
+    const proximas = eventos.filter(ev => ev.data >= dataHoje).slice(0, LIMITE_PROXIMAS);
+    document.getElementById('semProximas').hidden = proximas.length > 0;
 
-    let html = '';
     proximas.forEach(ev => {
+        const copia = document.getElementById('modelo-proxima').content.cloneNode(true);
+        const item = copia.querySelector('.proxima');
         const dias = diasAte(ev.data);
-        let classeUrgencia = '';
-        if (dias <= 2) classeUrgencia = 'urgente';
-        else if (dias <= 7) classeUrgencia = 'perto';
 
-        let detalhes = `${textoSeguro(siglaDaMateria(ev.materiaId))} · ${nomesTipos[ev.tipo]} · ${formatarData(ev.data)}`;
+        let detalhes = `${siglaDaMateria(ev.materiaId)} · ${nomesTipos[ev.tipo]} · ${formatarData(ev.data)}`;
         if (ev.hora) detalhes += ` · ${ev.hora}`;
 
-        html += `<li class="proxima" style="border-color: ${corDaMateria(ev.materiaId)}" data-data="${ev.data}">
-                    <div>
-                        <h4>${textoSeguro(ev.titulo)}</h4>
-                        <p>${detalhes}</p>
-                    </div>
-                    <span class="faltam ${classeUrgencia}">${textoFaltam(dias)}</span>
-                 </li>`;
+        item.style.borderColor = corDaMateria(ev.materiaId);
+        item.querySelector('.proxima-titulo').textContent = ev.titulo;
+        item.querySelector('.proxima-detalhes').textContent = detalhes;
+
+        const faltam = item.querySelector('.faltam');
+        faltam.textContent = textoFaltam(dias);
+        if (dias <= 2) faltam.classList.add('urgente');
+        else if (dias <= 7) faltam.classList.add('perto');
+
+        // clicar na entrega leva o calendário até o dia dela
+        item.onclick = function () {
+            selecionarDia(ev.data);
+        };
+
+        lista.appendChild(copia);
     });
-    lista.innerHTML = html;
 }
 
 
-// ===== Ações do usuário =====
+// ===== Ações do usuário (chamadas pelo HTML) =====
 
 function selecionarDia(data) {
     diaSelecionado = data;
@@ -217,30 +214,3 @@ function mudarMes(quantidade) {
 function irParaHoje() {
     selecionarDia(dataHoje);
 }
-
-
-// ===== Eventos da página =====
-
-document.getElementById('btnAnterior').addEventListener('click', function () {
-    mudarMes(-1);
-});
-
-document.getElementById('btnProximo').addEventListener('click', function () {
-    mudarMes(1);
-});
-
-document.getElementById('btnHoje').addEventListener('click', irParaHoje);
-
-// clique em um dia da grade (um só ouvinte para todos os dias)
-document.getElementById('grade').addEventListener('click', function (event) {
-    const dia = event.target.closest('.dia');
-    if (dia && dia.dataset.data) selecionarDia(dia.dataset.data);
-});
-
-// clique em uma próxima entrega: o calendário vai para o dia dela
-document.getElementById('proximas').addEventListener('click', function (event) {
-    const item = event.target.closest('.proxima');
-    if (item) selecionarDia(item.dataset.data);
-});
-
-window.addEventListener('load', carregarDados);

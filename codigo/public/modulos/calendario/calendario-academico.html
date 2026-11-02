@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="calendario-academico.css">
 </head>
 
-<body>
+<body onload="carregarDados()">
 
     <!-- Cabeçalho com menu -->
     <header>
@@ -42,10 +42,10 @@
 
                     <!-- 1) navegação do mês -->
                     <div class="topo-calendario">
-                        <button id="btnAnterior" class="btn btn-outline-secondary btn-sm" title="Mês anterior">&lt;</button>
+                        <button class="btn btn-outline-secondary btn-sm" title="Mês anterior" onclick="mudarMes(-1)">&lt;</button>
                         <h2 id="tituloMes" class="nome-mes"></h2>
-                        <button id="btnProximo" class="btn btn-outline-secondary btn-sm" title="Próximo mês">&gt;</button>
-                        <button id="btnHoje" class="btn btn-outline-secondary btn-sm">Hoje</button>
+                        <button class="btn btn-outline-secondary btn-sm" title="Próximo mês" onclick="mudarMes(1)">&gt;</button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="irParaHoje()">Hoje</button>
                     </div>
 
                     <div class="semana">
@@ -58,7 +58,7 @@
                         <div>sáb</div>
                     </div>
 
-                    <!-- 4) grade do mês, montada pelo JavaScript -->
+                    <!-- 4) grade do mês: os dias são cópias do modelo-dia -->
                     <div id="grade" class="grade"></div>
 
                     <!-- 6) legenda de cores das matérias -->
@@ -71,6 +71,7 @@
                 <div class="caixa">
                     <h3 class="titulo-caixa">Próximas entregas</h3>
                     <ul id="proximas" class="lista-proximas"></ul>
+                    <p id="semProximas" class="sem-evento" hidden>Nenhuma entrega pela frente.</p>
                 </div>
 
                 <p id="mensagem" class="mensagem"></p>
@@ -83,6 +84,36 @@
             Hub de Estudos - Gustavo Martins de Ávila - PUC Minas
         </div>
     </footer>
+
+    <!-- Modelos copiados pelo JavaScript -->
+
+    <template id="modelo-vazio">
+        <div class="dia vazio"></div>
+    </template>
+
+    <template id="modelo-dia">
+        <div class="dia">
+            <span class="numero"></span>
+        </div>
+    </template>
+
+    <template id="modelo-evento-mini">
+        <div class="evento-mini"></div>
+    </template>
+
+    <template id="modelo-legenda">
+        <span><span class="cor"></span><span class="sigla"></span></span>
+    </template>
+
+    <template id="modelo-proxima">
+        <li class="proxima">
+            <div>
+                <h4 class="proxima-titulo"></h4>
+                <p class="proxima-detalhes"></p>
+            </div>
+            <span class="faltam"></span>
+        </li>
+    </template>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="calendario-academico.js"></script>

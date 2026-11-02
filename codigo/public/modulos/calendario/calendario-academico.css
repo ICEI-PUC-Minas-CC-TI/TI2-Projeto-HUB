@@ -52,6 +52,17 @@ body {
 }
 
 
+/* filtros ficam à direita, ao lado dos botões */
+.filtros {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.filtros select {
+    width: 170px;
+}
+
 /* ===== Grade do mês ===== */
 
 .semana,
@@ -165,6 +176,15 @@ body {
 /* ===== Celular ===== */
 
 @media screen and (max-width: 600px) {
+
+    .filtros {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    .filtros select {
+        width: 50%;
+    }
 
     .nome-mes {
         width: auto;

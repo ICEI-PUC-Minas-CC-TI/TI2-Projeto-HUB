@@ -87,21 +87,26 @@ package.json                comandos npm (na raiz do projeto)
 
 ---
 
-# Calendário acadêmico · Sprint 2 (em andamento)
+# Calendário acadêmico · Sprint 2
 
-Tela de **apresentação** (AI): mostra os eventos cadastrados na tela acima, sem cadastrar nada.
+Tela de **apresentação** (AI): mostra os eventos cadastrados na tela acima, sem cadastrar nada. As informações para a correção estão na seção "Sprint 2" do [README-CORRECAO.md](README-CORRECAO.md).
 
-**Endereço:** http://localhost:3000/modulos/calendario/calendario-academico.html (com o `npm start` rodando)
+**Endereço:** http://localhost:3000/modulos/calendario/calendario-academico.html (com o `npm start` rodando, igual à tela de cadastro)
 
-Feito até agora:
+## Como usar a tela
 
-- **Grade do mês** montada por JavaScript (DOM) com os eventos do JSON Server, cada um na cor da matéria. Dias que já passaram ficam apagados.
-- **Navegação:** `<` e `>` trocam o mês; **Hoje** volta para o mês atual e seleciona o dia de hoje (destacado na grade).
-- **Legenda** com a cor de cada matéria.
+- **Navegar:** `<` e `>` trocam o mês; **Hoje** volta para o mês atual e seleciona o dia de hoje (destacado na grade).
+- **Ver um dia:** clique em um dia da grade. A caixa **Eventos do dia** mostra título, matéria, tipo, hora e sala de cada evento.
+- **Filtrar:** escolha uma matéria e/ou um tipo (prova, trabalho, tarefa, quiz ou aulão). A grade, os eventos do dia e as próximas entregas mudam na hora.
 - **Próximas entregas:** os próximos eventos a partir de hoje, em ordem de data, com "hoje", "amanhã" ou "faltam N dias" (amarelo até 7 dias, vermelho até 2). Clicar em um item leva o calendário até o dia dele.
+- **Legenda:** a cor de cada matéria, a mesma usada na grade e nas listas.
 
-Leitura: `GET /materias` e `GET /eventos?_sort=data,hora&_order=asc,asc`.
+Falta (próxima etapa): login com permissões por cargo.
 
-Falta (próximas etapas): filtros por matéria e por tipo, lista de eventos do dia selecionado e login com permissões por cargo.
+## Arquivos
 
-Arquivos: `calendario-academico.html`, `calendario-academico.css` e `calendario-academico.js`, nesta mesma pasta.
+```
+calendario-academico.html   página, com os modelos <template> que o JavaScript copia
+calendario-academico.css    estilos, com a versão para celular (@media)
+calendario-academico.js     todo o JavaScript
+```

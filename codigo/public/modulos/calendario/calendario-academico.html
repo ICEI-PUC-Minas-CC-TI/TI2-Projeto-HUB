@@ -32,7 +32,7 @@
     <main class="container my-4">
 
         <h1 class="titulo-pagina">Calendário acadêmico</h1>
-        <p class="text-secondary">Visão do mês e próximas entregas</p>
+        <p class="text-secondary">Visão do mês, eventos do dia e próximas entregas</p>
 
         <div class="row">
 
@@ -46,6 +46,21 @@
                         <h2 id="tituloMes" class="nome-mes"></h2>
                         <button class="btn btn-outline-secondary btn-sm" title="Próximo mês" onclick="mudarMes(1)">&gt;</button>
                         <button class="btn btn-outline-secondary btn-sm" onclick="irParaHoje()">Hoje</button>
+
+                        <!-- 2) filtro por matéria e 3) filtro por tipo -->
+                        <div class="filtros">
+                            <select id="filtroMateria" class="form-select form-select-sm" title="Filtrar por matéria" onchange="aplicarFiltros()">
+                                <option value="todas">Todas as matérias</option>
+                            </select>
+                            <select id="filtroTipo" class="form-select form-select-sm" title="Filtrar por tipo" onchange="aplicarFiltros()">
+                                <option value="todos">Todos os tipos</option>
+                                <option value="prova">Prova</option>
+                                <option value="trabalho">Trabalho</option>
+                                <option value="tarefa">Tarefa</option>
+                                <option value="quiz">Quiz</option>
+                                <option value="aulao">Aulão</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="semana">
@@ -66,8 +81,16 @@
                 </div>
             </section>
 
-            <!-- 7) Próximas entregas -->
             <aside class="col-12 col-lg-4">
+
+                <!-- 8) Eventos do dia selecionado -->
+                <div class="caixa mb-4">
+                    <h3 id="tituloDia" class="titulo-caixa"></h3>
+                    <ul id="eventosDia" class="lista-proximas"></ul>
+                    <p id="semEventosDia" class="sem-evento" hidden>Nada marcado neste dia.</p>
+                </div>
+
+                <!-- 7) Próximas entregas -->
                 <div class="caixa">
                     <h3 class="titulo-caixa">Próximas entregas</h3>
                     <ul id="proximas" class="lista-proximas"></ul>
@@ -103,6 +126,17 @@
 
     <template id="modelo-legenda">
         <span><span class="cor"></span><span class="sigla"></span></span>
+    </template>
+
+    <template id="modelo-opcao">
+        <option></option>
+    </template>
+
+    <template id="modelo-evento-dia">
+        <li class="evento">
+            <h4 class="evento-titulo"></h4>
+            <p class="evento-detalhes"></p>
+        </li>
     </template>
 
     <template id="modelo-proxima">

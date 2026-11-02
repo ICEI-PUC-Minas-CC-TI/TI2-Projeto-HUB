@@ -106,3 +106,55 @@ Antes de testar: `npm start` rodando e a página aberta. Para começar com os da
 - **Sem login:** o login é de outra funcionalidade da equipe. Por isso o calendário é único, sem separar por usuário.
 - **Escopo:** esta entrega é o cadastro (CI). A visualização do calendário acadêmico, com próximas entregas, é a entrega da Sprint 2.
 - **Tecnologias:** HTML, CSS, Bootstrap 5, JavaScript (DOM e `fetch`) e JSON Server 0.17.4.
+
+---
+
+# Sprint 2 · Calendário acadêmico
+
+| | |
+| --- | --- |
+| **Artefato** | Calendário acadêmico (visão mensal, eventos do dia e próximas entregas) |
+| **Tipo** | AI · Apresentação de Informação |
+| **Endereço** | http://localhost:3000/modulos/calendario/calendario-academico.html |
+
+Para rodar: o mesmo `npm install` e `npm start` da Sprint 1, na raiz do projeto. A tela só lê os dados; para cadastrar eventos, use a tela da Sprint 1.
+
+## Como a entrega atende a rubrica (Apresentação de Informação)
+
+| Critério (nível Completo) | Como foi atendido | Onde ver |
+| --- | --- | --- |
+| Documentação da interface e da estrutura de dados | Esta seção, o [README.md](README.md) e o documento "Orientação de Avaliação" | abaixo |
+| Tela montada por JavaScript (DOM) com dados do JSON Server | `GET /materias` e `GET /eventos`; grade, legenda, filtro de matérias e listas são cópias dos modelos `<template>` do HTML | `carregarDados` (linha 98) |
+| Dinâmica de tela | Informação em **calendário**, com **filtros** por matéria e por tipo | `montarCalendario` (146), `aplicarFiltros` (262) |
+| Pelo menos 3 eventos distintos | `onload` (carrega os dados), `onclick` (setas, Hoje, dias e próximas entregas) e `onchange` (dois filtros) | atributos no `calendario-academico.html` |
+| Código JavaScript sem erros | Console do navegador sem erros ao abrir e usar a tela | F12, aba Console |
+
+## Partes da tela (numeração do planejamento da Sprint 2)
+
+| # | Elemento | Função em `calendario-academico.js` |
+| --- | --- | --- |
+| 1 | Navegação do mês (`<`, `>`, Hoje) | `mudarMes`, `irParaHoje` |
+| 2 | Filtro por matéria (opções vindas do `GET /materias`) | `montarFiltroMaterias`, `aplicarFiltros` |
+| 3 | Filtro por tipo | `aplicarFiltros`, `passaNoFiltro` |
+| 4 | Grade do mês, com os eventos na cor da matéria | `montarCalendario`, `selecionarDia` |
+| 5 | Dia de hoje destacado | `montarCalendario` (classe `hoje`) |
+| 6 | Legenda de cores | `montarLegenda` |
+| 7 | Próximas entregas, com "faltam N dias" e respeitando os filtros | `montarProximas`, `diasAte` |
+| 8 | Eventos do dia selecionado | `montarEventosDoDia` |
+
+Leitura: `GET /materias` e `GET /eventos?_sort=data,hora&_order=asc,asc`. Mesma estrutura de dados da Sprint 1 (seção 3 acima).
+
+## Cenários de teste
+
+Antes de testar: `npm start` rodando e a página aberta. Os dados de exemplo vão de outubro a novembro de 2026.
+
+| # | Cenário | Ações | Resultado esperado |
+| --- | --- | --- | --- |
+| 1 | Abrir a tela | Abrir o endereço da página | A grade mostra o mês atual com os eventos do `db.json`, o dia de hoje destacado e a legenda; a caixa da direita mostra o dia de hoje |
+| 2 | Navegar entre meses | Clicar em `<` até outubro de 2026 e clicar em **Hoje** | Outubro mostra os eventos do mês; **Hoje** volta para o mês atual |
+| 3 | Ver os eventos de um dia | Ir para outubro de 2026 e clicar no dia 22 | A caixa mostra "Quinta-feira, 22/10/2026" e "Prova 2 - CALC1 - Prova - 08:50 - sala 310" |
+| 4 | Filtrar por matéria | Escolher **DIW** no primeiro seletor | Ficam na grade e nas listas só os eventos de DIW |
+| 5 | Filtrar por tipo | Com DIW escolhido, escolher **Quiz** no segundo seletor | Fica só o "Quiz - Fetch e APIs"; voltando para **Todas as matérias** e **Todos os tipos**, tudo reaparece |
+| 6 | Próximas entregas | Clicar em um item da lista **Próximas entregas** | O calendário vai até o mês do evento e seleciona o dia dele |
+| 7 | Dados atualizados | Cadastrar um evento futuro na tela de cadastro e recarregar o calendário | O evento aparece na grade e, se estiver entre os próximos, na lista |
+| 8 | Celular (extra) | F12 › ícone de celular, largura 375 px | Os filtros ocupam a linha inteira, as caixas se empilham e cada dia mostra só barras coloridas |

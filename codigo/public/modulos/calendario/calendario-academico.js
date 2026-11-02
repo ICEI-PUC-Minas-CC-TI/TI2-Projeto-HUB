@@ -1,4 +1,4 @@
-// Hub de Estudos - Calendário acadêmico (visão mensal e próximas entregas)
+// Hub de Estudos - Calendário acadêmico (visão mensal, eventos do dia e próximas entregas)
 // Só apresenta os eventos. Eles são cadastrados na tela cadastro-eventos.html (Sprint 1).
 // Os dados vêm do JSON Server (codigo/db/db.json). Para rodar: npm start, na raiz do repositório.
 
@@ -9,6 +9,8 @@ const coresMaterias = ['#2b5fc4', '#b08a00', '#8a2be2', '#2e7d32', '#d81b60', '#
 
 const nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
     'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+const nomesDias = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
+    'Quinta-feira', 'Sexta-feira', 'Sábado'];
 const nomesTipos = { prova: 'Prova', trabalho: 'Trabalho', tarefa: 'Tarefa', quiz: 'Quiz', aulao: 'Aulão' };
 
 // quantos itens aparecem em "Próximas entregas"
@@ -22,6 +24,8 @@ const dataHoje = montarData(hoje.getFullYear(), hoje.getMonth() + 1, hoje.getDat
 let anoAtual = hoje.getFullYear();
 let mesAtual = hoje.getMonth();      // janeiro = 0
 let diaSelecionado = dataHoje;
+let filtroMateria = 'todas';
+let filtroTipo = 'todos';
 
 
 // ===== Funções de apoio =====
@@ -30,6 +34,12 @@ function montarData(ano, mes, dia) {
     if (mes < 10) mes = '0' + mes;
     if (dia < 10) dia = '0' + dia;
     return `${ano}-${mes}-${dia}`;
+}
+
+// "AAAA-MM-DD" -> "dd/mm/aaaa"
+function formatarDataCompleta(data) {
+    const partes = data.split('-');
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
 function formatarData(data) {
@@ -64,9 +74,16 @@ function corDaMateria(id) {
     return coresMaterias[posicao % coresMaterias.length];
 }
 
-// eventos de um dia, ordenados pela hora
+// o evento aparece se combinar com os dois filtros
+function passaNoFiltro(ev) {
+    const materiaOk = filtroMateria === 'todas' || ev.materiaId == filtroMateria;
+    const tipoOk = filtroTipo === 'todos' || ev.tipo === filtroTipo;
+    return materiaOk && tipoOk;
+}
+
+// eventos de um dia, respeitando os filtros e ordenados pela hora
 function eventosDoDia(data) {
-    const lista = eventos.filter(ev => ev.data === data);
+    const lista = eventos.filter(ev => ev.data === data && passaNoFiltro(ev));
     lista.sort((a, b) => a.hora > b.hora ? 1 : -1);
     return lista;
 }
@@ -88,8 +105,10 @@ async function carregarDados() {
         if (!respEventos.ok) throw new Error(`Erro ${respEventos.status}`);
         eventos = await respEventos.json();
 
+        montarFiltroMaterias();
         montarLegenda();
         montarCalendario();
+        montarEventosDoDia();
         montarProximas();
     } catch (erro) {
         console.log(erro);
@@ -99,6 +118,18 @@ async function carregarDados() {
 
 
 // ===== Montagem da tela (cópias dos modelos <template> do HTML) =====
+
+// opções do filtro de matéria, vindas do GET /materias
+function montarFiltroMaterias() {
+    const select = document.getElementById('filtroMateria');
+    materias.forEach(m => {
+        const copia = document.getElementById('modelo-opcao').content.cloneNode(true);
+        const opcao = copia.querySelector('option');
+        opcao.value = m.id;
+        opcao.textContent = m.sigla;
+        select.appendChild(copia);
+    });
+}
 
 function montarLegenda() {
     const legenda = document.getElementById('legenda');
@@ -158,7 +189,7 @@ function montarProximas() {
     const lista = document.getElementById('proximas');
     lista.innerHTML = '';
 
-    const proximas = eventos.filter(ev => ev.data >= dataHoje).slice(0, LIMITE_PROXIMAS);
+    const proximas = eventos.filter(ev => ev.data >= dataHoje && passaNoFiltro(ev)).slice(0, LIMITE_PROXIMAS);
     document.getElementById('semProximas').hidden = proximas.length > 0;
 
     proximas.forEach(ev => {
@@ -188,6 +219,34 @@ function montarProximas() {
 }
 
 
+function montarEventosDoDia() {
+    const partes = diaSelecionado.split('-');
+    const diaDaSemana = new Date(partes[0], partes[1] - 1, partes[2]).getDay();
+    document.getElementById('tituloDia').textContent = `${nomesDias[diaDaSemana]}, ${formatarDataCompleta(diaSelecionado)}`;
+
+    const lista = document.getElementById('eventosDia');
+    lista.innerHTML = '';
+
+    const doDia = eventosDoDia(diaSelecionado);
+    document.getElementById('semEventosDia').hidden = doDia.length > 0;
+
+    doDia.forEach(ev => {
+        const copia = document.getElementById('modelo-evento-dia').content.cloneNode(true);
+        const item = copia.querySelector('.evento');
+
+        let detalhes = `${siglaDaMateria(ev.materiaId)} - ${nomesTipos[ev.tipo]}`;
+        if (ev.hora) detalhes += ` - ${ev.hora}`;
+        else detalhes += ' - dia inteiro';
+        if (ev.sala) detalhes += ` - sala ${ev.sala}`;
+
+        item.style.borderColor = corDaMateria(ev.materiaId);
+        item.querySelector('.evento-titulo').textContent = ev.titulo;
+        item.querySelector('.evento-detalhes').textContent = detalhes;
+        lista.appendChild(copia);
+    });
+}
+
+
 // ===== Ações do usuário (chamadas pelo HTML) =====
 
 function selecionarDia(data) {
@@ -196,6 +255,16 @@ function selecionarDia(data) {
     anoAtual = Number(partes[0]);
     mesAtual = Number(partes[1]) - 1;
     montarCalendario();
+    montarEventosDoDia();
+}
+
+// chamada no onchange dos dois filtros
+function aplicarFiltros() {
+    filtroMateria = document.getElementById('filtroMateria').value;
+    filtroTipo = document.getElementById('filtroTipo').value;
+    montarCalendario();
+    montarEventosDoDia();
+    montarProximas();
 }
 
 function mudarMes(quantidade) {

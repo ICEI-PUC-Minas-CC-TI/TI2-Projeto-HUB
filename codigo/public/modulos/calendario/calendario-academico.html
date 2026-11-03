@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário acadêmico · Hub de Estudos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="calendario-academico.css">
+</head>
+
+<body onload="carregarDados()">
+
+    <!-- Cabeçalho com menu -->
+    <header>
+        <nav class="navbar navbar-expand-md border-bottom">
+            <div class="container">
+                <a class="navbar-brand logo" href="calendario-academico.html">Hub de Estudos</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="menu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../../index.html">Início</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="calendario-academico.html">Calendário</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container my-4">
+
+        <h1 class="titulo-pagina">Calendário acadêmico</h1>
+        <p class="text-secondary">Visão do mês, eventos do dia e próximas entregas</p>
+
+        <div class="row">
+
+            <!-- Calendário do mês -->
+            <section class="col-12 col-lg-8 mb-4">
+                <div class="caixa">
+
+                    <!-- 1) navegação do mês -->
+                    <div class="topo-calendario">
+                        <button class="btn btn-outline-secondary btn-sm" title="Mês anterior" onclick="mudarMes(-1)">&lt;</button>
+                        <h2 id="tituloMes" class="nome-mes"></h2>
+                        <button class="btn btn-outline-secondary btn-sm" title="Próximo mês" onclick="mudarMes(1)">&gt;</button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="irParaHoje()">Hoje</button>
+
+                        <!-- 2) filtro por matéria e 3) filtro por tipo -->
+                        <div class="filtros">
+                            <select id="filtroMateria" class="form-select form-select-sm" title="Filtrar por matéria" onchange="aplicarFiltros()">
+                                <option value="todas">Todas as matérias</option>
+                            </select>
+                            <select id="filtroTipo" class="form-select form-select-sm" title="Filtrar por tipo" onchange="aplicarFiltros()">
+                                <option value="todos">Todos os tipos</option>
+                                <option value="prova">Prova</option>
+                                <option value="trabalho">Trabalho</option>
+                                <option value="tarefa">Tarefa</option>
+                                <option value="quiz">Quiz</option>
+                                <option value="aulao">Aulão</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="semana">
+                        <div>dom</div>
+                        <div>seg</div>
+                        <div>ter</div>
+                        <div>qua</div>
+                        <div>qui</div>
+                        <div>sex</div>
+                        <div>sáb</div>
+                    </div>
+
+                    <!-- 4) grade do mês: os dias são cópias do modelo-dia -->
+                    <div id="grade" class="grade"></div>
+
+                    <!-- 6) legenda de cores das matérias -->
+                    <div id="legenda" class="legenda"></div>
+                </div>
+            </section>
+
+            <aside class="col-12 col-lg-4">
+
+                <!-- 8) Eventos do dia selecionado -->
+                <div class="caixa mb-4">
+                    <h3 id="tituloDia" class="titulo-caixa"></h3>
+                    <ul id="eventosDia" class="lista-proximas"></ul>
+                    <p id="semEventosDia" class="sem-evento" hidden>Nada marcado neste dia.</p>
+                </div>
+
+                <!-- 7) Próximas entregas -->
+                <div class="caixa">
+                    <h3 class="titulo-caixa">Próximas entregas</h3>
+                    <ul id="proximas" class="lista-proximas"></ul>
+                    <p id="semProximas" class="sem-evento" hidden>Nenhuma entrega pela frente.</p>
+                </div>
+
+                <p id="mensagem" class="mensagem"></p>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="rodape border-top">
+        <div class="container">
+            Hub de Estudos - Gustavo Martins de Ávila - PUC Minas
+        </div>
+    </footer>
+
+    <!-- Modelos copiados pelo JavaScript -->
+
+    <template id="modelo-vazio">
+        <div class="dia vazio"></div>
+    </template>
+
+    <template id="modelo-dia">
+        <div class="dia">
+            <span class="numero"></span>
+        </div>
+    </template>
+
+    <template id="modelo-evento-mini">
+        <div class="evento-mini"></div>
+    </template>
+
+    <template id="modelo-legenda">
+        <span><span class="cor"></span><span class="sigla"></span></span>
+    </template>
+
+    <template id="modelo-opcao">
+        <option></option>
+    </template>
+
+    <template id="modelo-evento-dia">
+        <li class="evento">
+            <h4 class="evento-titulo"></h4>
+            <p class="evento-detalhes"></p>
+        </li>
+    </template>
+
+    <template id="modelo-proxima">
+        <li class="proxima">
+            <div>
+                <h4 class="proxima-titulo"></h4>
+                <p class="proxima-detalhes"></p>
+            </div>
+            <span class="faltam"></span>
+        </li>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="calendario-academico.js"></script>
+</body>
+
+</html>
